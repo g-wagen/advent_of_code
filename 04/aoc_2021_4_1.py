@@ -1,6 +1,4 @@
 import helper
-import copy
-import pandas as pd
 import numpy as np
 
 data = """7, 4, 9, 5, 11, 17, 23, 2, 0, 14, 21, 24, 10, 16, 13, 6, 15, 25, 12, 22, 18, 20, 8, 19, 3, 26, 1
@@ -22,60 +20,40 @@ data = """7, 4, 9, 5, 11, 17, 23, 2, 0, 14, 21, 24, 10, 16, 13, 6, 15, 25, 12, 2
 18  8 23 26 20
 22 11 13  6  5
 2  0 12  3  7"""
+
 data = [x for x in data.split('\n')]
+data = helper.get_puzzle_input(y=2021, d=4)
+
+inputs = np.array([int(x) for x in data[0].split(',')])
 
 
-# data = helper.get_puzzle_input(y=2021, d=4)
+grids = [x.strip().replace('  ', ' ') for x in data[1:] if len(x) > 1]
 
-splits = data.count('')
-split_pos = []
+for i, bi in enumerate(grids):
+    numbers = [int(x) for x in bi.split()]
+    grids[i] = numbers
 
-for i, item in enumerate(data):
-    if item == '':
-        split_pos.append(i)
+dim = (int(len(grids)/5), 5, 5)
+grids = np.array(grids).reshape(dim)
 
-nums = [int(x) for x in data[0].split(',')]
+stop = False
+gridsum = 0
 
-chunk_size = 5
-boards = {}
+for num in inputs:
+    grids = np.where(num == grids, np.nan, grids)
+    for grid in grids:
+        for row, col in zip(range(grid.shape[0]), range(grid.shape[1])):
+            # horizontal
+            bingo_row = np.isnan(grid[row]).all()
+            # vertical
+            bingo_col = np.isnan(grid[:, col]).all()
 
-for i, pos in enumerate(split_pos):
-    try:
-        board = data[pos:split_pos[i+1]]
-    except IndexError:
-        board = data[pos:]
-    combine = ' '.join([x for x in board]).split()
-    combine = [int(x) for x in combine]
-    boards[i] = [combine[i:i + chunk_size] for i in range(0, len(combine), chunk_size)]
-    # boards[i] = combine
+            if bingo_row or bingo_col:
+                stop = True
+                gridsum = int(np.sum(grid[np.logical_not(np.isnan(grid))]))
 
-# print(boards)
-
-# dfs = {k:pd.DataFrame(v) for (k, v) in boards.items()}
-dfs = [pd.DataFrame(v) for k, v in boards.items()]
-
-calcing = True
-
-# while calcing:
-for n in nums:
-    for i, df in enumerate(dfs):
-        for col in df.columns:
-            df.loc[df[col] == n, col] = np.nan
-        # dfs[i] = df[df != n]
-            nan_cols = dfs[i].loc[:, dfs[i].isnull().all()]
-            nan_rows = dfs[i][dfs[i].isna().all(axis=1)]
-            if nan_cols.shape[1] == 1 or nan_rows.shape[0] == 5:
-        #     print(dfs[i].sum() * n)
-                break
-            # calcing = False
-            # else:
-            #     calcing = True
-            # print(nan_cols)
-            # print(nan_cols.shape)
-            # print(nan_rows)
-            # print(nan_rows.shape)
-            # print(n)
-        # print(df)
-    # for df in dfs
-print(dfs)
-
+    if stop:
+        print(f'Winning number: {num}')
+        print(f'Board sum: {gridsum}')
+        print(f'Winning number * board sum: {num * gridsum}')
+        break
