@@ -1,8 +1,5 @@
 import helper
 import numpy as np
-import gc
-
-gc.collect()
 
 data = ['3,4,3,1,2']
 data = helper.get_puzzle_input(d=6, y=2021)
@@ -26,12 +23,6 @@ for d in range(1, days + 1):
     add_multiplier = simple[simple == True].shape[0]
 
     data = np.append(data, np.array([8] * add_multiplier))
-    del prev_has_zero
-    del data_has_six
-    del compare
-    del simple
-    del add_multiplier
-    gc.collect()
 
 print(f'Lanternfish population after {days} days: {len(data)}')
 
