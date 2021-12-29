@@ -1,2 +1,4 @@
 .env
+*.ipy*
 puzzle_input.txt
+__pycache__
