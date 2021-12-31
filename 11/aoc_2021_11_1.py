@@ -14,86 +14,40 @@ data = [
     '5283751526'
 ]
 
-# data = helper.get_puzzle_input(d=15, y=2021)
+data = helper.get_puzzle_input(d=11, y=2021)
 
-axis_0 = len(data)
-axis_1 = len(data[0])
+ax_0 = len(data)
+ax_1 = len(data[0])
 data = [int(x) for x in ''.join(data)]
-data = np.array(data).reshape((axis_0, axis_1))
-print(data)
+data = np.array(data).reshape((ax_0, ax_1)).astype('float')
+data = np.pad(data, 1, mode='constant', constant_values=np.NINF)
+
+def flashing_dumbos(arr):
+    flashes = np.count_nonzero(arr > 9)
+    flash_y, flash_x = np.where(arr > 9)
+    # Change flashed into NAN. 
+    # This way the value won't change if multiplied or added.
+    arr = np.where(arr > 9, np.nan, arr)
+    
+    for y, x in zip(flash_y, flash_x):
+        arr[y-1:y+2, x-1:x+2] += 1
+    return arr, flashes
+
+def fix_nan(arr):
+    return np.where(np.isnan(arr), 0, arr)
 
 
-def nbors2(y, x, ylen, xlen):
-    left = x-1 if x-1 > -1 else x
-    right = x+2 if x+2 < axis_1 else x+1
-    up = y-1 if y-1 > -1 else y
-    down = y+2 if y+2 < axis_0 else y+1
+steps = 100
+total_flashes = 0
 
-    data[up:down, left:right]
-    
-    out_coords = []
-    left = x-1 if x-1 > 0 else np.nan
-    right = x+1 if x+1 < xlen else np.nan
-    up = y-1 if y-1 > 0 else np.nan
-    down = y+1 if y+1 < ylen else np.nan
-
-    L = [y, left]
-    R = [y, right]
-    U = [up, x]
-    D = [down, x]
-    UL = [up, left]
-    UR = [up, right]
-    DL = [down, left]
-    DR = [down, right]
-    
-    all_nb_coords = [L, R, U, D, UL, UR, DL, DR]
-    
-    for coords in all_nb_coords:
-        if np.nan not in coords:
-            crds = (coords[0], coords[1])
-            out_coords.append(crds)
-    return out_coords
-    
-
-days = 5
-flashes = 0
-for d in range(days):
-    
-    # Increase energy level +1
+for s in range(steps):
     data += 1
+    data, flashes = flashing_dumbos(data)
     
-    # Reset energy levels > 9 to 0
+    while flashes > 0:
+        total_flashes += flashes
+        data, flashes = flashing_dumbos(data)
+            
+    data = fix_nan(data)
     
-    
-    # Count initial flashes
-    # flashes += np.count_nonzero(data == 0)
-    
-    print(f'------\nDay {d+1}\n')#, np.where(data == 0, np.nan, data))
-    init_flashes = np.count_nonzero(data > 9)
-    prev_flashes = init_flashes
-    new_flashes = 0
-    
-    do_it = True
-    
-    while do_it:
-        data = np.where(data > 9, 0, data)
-        flash_y, flash_x = np.where(data == 0)
-        flash_nbors = []
-        for y, x in zip(flash_y, flash_x):
-            flash_nbors.append(nbors2(y, x, axis_1, axis_0))
-
-        for flash in flash_nbors:
-            for coord in flash:
-                data[coord] += 1
-        
-        data = np.where(data > 9, 0, data)
-        do_it = False
-        
-        # end_init = np.count_nonzero(data == 0)
-        # print(data)
-        # print(start_init, end_init)
-        # do_it = False if start_init == end_init else True
-        
-    
-    # print(data)
-    # print(f'Flashes: {flashes}')
+print(f'Puzzle answer is: {total_flashes}')
