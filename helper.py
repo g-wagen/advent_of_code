@@ -15,7 +15,6 @@ def get_puzzle_input(y=None, d=None):
     :type y: int
     """
 
-    puzzle_input_file = 'puzzle_input.txt'
     puzzle_input = None
 
     # Possibility to fetch any puzzle input or today's input
@@ -26,6 +25,8 @@ def get_puzzle_input(y=None, d=None):
     else:
         day = d
         year = y
+
+    puzzle_input_file = f'aoc-{year}_{day:02d}_input.txt'
 
     # Let's go easy on the webserver hosting the Advent of Code event and
     # download the puzzle input to a local file in case it doesn't exist yet
@@ -48,3 +49,10 @@ def get_puzzle_input(y=None, d=None):
         puzzle_input = f.read().splitlines()
 
     return puzzle_input
+
+
+def make_chunks(chunk_size, iterable):
+    chunks = []
+    for i in range(0, len(iterable), chunk_size):
+        chunks.append(iterable[i:i+chunk_size])
+    return chunks
