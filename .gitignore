@@ -1,4 +1,6 @@
 .env
+.venv
 *.ipy*
-puzzle_input.txt
 __pycache__
+.pdm.toml
+pdm.lock
