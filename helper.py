@@ -1,3 +1,5 @@
+from typing import Any
+
 import requests
 import datetime
 import os
@@ -26,7 +28,7 @@ def get_puzzle_input(y=None, d=None):
         day = d
         year = y
 
-    puzzle_input_file = f'aoc-{year}_{day:02d}_input.txt'
+    puzzle_input_file = f'aoc_{year}_{day:02d}_input.txt'
 
     # Let's go easy on the webserver hosting the Advent of Code event and
     # download the puzzle input to a local file in case it doesn't exist yet
@@ -56,3 +58,7 @@ def make_chunks(chunk_size, iterable):
     for i in range(0, len(iterable), chunk_size):
         chunks.append(iterable[i:i+chunk_size])
     return chunks
+
+
+def print_solution(solution: Any, y: int, d: int, part: int):
+    print(f'{d:02d}.12.{y} {part}: {solution}')
