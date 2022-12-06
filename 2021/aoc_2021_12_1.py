@@ -57,7 +57,7 @@ class CaveSystem:
                 self.small_caves_visit_counter[choose_next] -= 1
             else:
                 ...
-        elif choose_next == 'end':
+        # elif choose_next == 'end':
 
     def dont_go(self, choices):
         next
