@@ -1,20 +1,23 @@
 from helper import get_puzzle_input
 from pathlib import Path
+import shutil
 import os
 
-# puzzle_input = get_puzzle_input(y=2022, d=7)
+puzzle_input = get_puzzle_input(y=2022, d=7)
 
-with open('aoc_2022_07_input_sample.txt', 'r') as f:
-    puzzle_input = f.read().splitlines()
+# with open('aoc_2022_07_input_sample.txt', 'r') as f:
+#     puzzle_input = f.read().splitlines()
 
-# root_dir = ''
+# delete file structure if it exists
+root_dir = (Path(__file__).parents[0] / 'aoc_2022_07')
+if Path(root_dir).exists():
+    shutil.rmtree(root_dir)
+
 
 # build the damn directory tree
-
 for line in puzzle_input:
     parts = line.split()
     if '/' in line:
-        root_dir = (Path(__file__).parents[0] / 'aoc_2022_07')
         try:
             os.mkdir(root_dir)
         except FileExistsError:
@@ -37,11 +40,14 @@ for line in puzzle_input:
 
 
 def get_file_size(the_file: str) -> int:
-    return Path(the_file).stat().st_size
+    if Path(the_file).is_file():
+        return Path(the_file).stat().st_size
+    else:
+        return 0
 
 
 directories = {}
-filepath = str(Path(Path(__file__).parents[0] / 'aoc_2022_07' ))
+filepath = str(Path(Path(__file__).parents[0] / 'aoc_2022_07'))
 
 
 def get_all_dirs(start):
@@ -60,16 +66,28 @@ def recursive_file_sizes(start):
     return sizes
 
 
+def this_folder_size(folderpath):
+    return sum([get_file_size(x) for x in os.listdir(folderpath) if Path(x).is_file()])
+
+
 dirs_and_sizes = dict()
 
+# for dir in get_all_dirs(filepath):
+#     whole_folder_size = recursive_file_sizes(dir)
+#     if whole_folder_size <= 100000:
+#         dirs_and_sizes[whole_folder_size] = dir
+
 for dir in get_all_dirs(filepath):
-    whole_folder_size = recursive_file_sizes(dir)
-    if whole_folder_size <= 100000:
-        dirs_and_sizes[whole_folder_size] = dir
+    folder_contents = os.listdir(dir)
+    folder_size = sum([get_file_size(str(Path(dir, x))) for x in folder_contents])
+    if folder_size <= 100000:
+        dirs_and_sizes[folder_size] = dir
 
-sum = 0
-for k, v in sorted(dirs_and_sizes.items(), reverse=True):
-    print(k, v)
-    sum += k
+total = 0
 
-print(sum)
+for k, v in sorted(dirs_and_sizes.items(), key=lambda x: x[1]):
+    print(v.replace(filepath, '').split('/')[1:])
+    # print(f'{k:05d}', v)
+    total += k
+
+print(total)
