@@ -2,35 +2,38 @@ from helper import get_puzzle_input
 from pathlib import Path
 import os
 
-puzzle_input = get_puzzle_input(y=2022, d=7)
+# puzzle_input = get_puzzle_input(y=2022, d=7)
 
-root_dir = ''
+with open('aoc_2022_07_input_sample.txt', 'r') as f:
+    puzzle_input = f.read().splitlines()
+
+# root_dir = ''
 
 # build the damn directory tree
 
-# for line in puzzle_input:
-#     parts = line.split()
-#     if '/' in line:
-#         root_dir = (Path(__file__).parents[0] / 'aoc_2022_07')
-#         try:
-#             os.mkdir(root_dir)
-#         except FileExistsError:
-#             pass
-#         os.curdir = root_dir
-#     elif 'dir' == parts[0]:
-#         try:
-#             os.mkdir(str(Path(os.curdir) / parts[1]))
-#         except FileExistsError:
-#             ...
-#     elif parts[0].isdigit():
-#         with open(os.path.join(os.curdir, parts[1]), 'a') as f:
-#             write_this = ''.join([str(1) for x in range(int(parts[0]))])
-#             f.write(write_this)
-#     elif parts[1] == 'cd':
-#         if parts[2] == '..':
-#             os.curdir = str(Path(os.curdir).parent)
-#         else:
-#             os.curdir = str(Path(os.curdir) / parts[2])
+for line in puzzle_input:
+    parts = line.split()
+    if '/' in line:
+        root_dir = (Path(__file__).parents[0] / 'aoc_2022_07')
+        try:
+            os.mkdir(root_dir)
+        except FileExistsError:
+            pass
+        os.curdir = root_dir
+    elif 'dir' == parts[0]:
+        try:
+            os.mkdir(str(Path(os.curdir) / parts[1]))
+        except FileExistsError:
+            ...
+    elif parts[0].isdigit():
+        with open(os.path.join(os.curdir, parts[1]), 'a') as f:
+            write_this = ''.join([str(1) for x in range(int(parts[0]))])
+            f.write(write_this)
+    elif parts[1] == 'cd':
+        if parts[2] == '..':
+            os.curdir = str(Path(os.curdir).parent)
+        else:
+            os.curdir = str(Path(os.curdir) / parts[2])
 
 
 def get_file_size(the_file: str) -> int:
