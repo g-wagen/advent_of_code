@@ -10,7 +10,7 @@ dependencies = [
     "pathfinding>=1.0.1",]
 
 requires-python = ">=3.10"
-license = {text = "MIT"}
+license = {text = ""}
 
 [tool]
 [tool.pdm]
