@@ -122,6 +122,7 @@ def search(grid, start):
 
     return False
 
+# This brute force approach does not work on a big dataset
 
 iterations = range(1000)
 
