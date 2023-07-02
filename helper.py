@@ -11,20 +11,24 @@ def read_puzzle_input(input_path: str) -> list[str]:
         return f.read().splitlines()
 
 
-def get_puzzle_input(y: int = None, d: int = None):
+def get_puzzle_input(y: int = None, d: int = None) -> list[str]:
     """Fetches Advent of Code puzzle input
 
     It reads a session cookie variable from a .env file in the parent directory.
 
-    :param d: Don't set to get today's puzzle input. Set to get any day.
-    :type d: int
-    :param y: Don't set to get today's puzzle input. Set to get any year.
-    :type y: int
+    Args:
+        y: Don't set to get today's puzzle input. Set to get any day.
+        d: Don't set to get today's puzzle input. Set to get any year.
+
+    Returns:
+        object: Puzzle input
     """
 
     # Possibility to fetch any puzzle input or today's input
     today = datetime.date.today()
     if d is None and y is None:
+        if int(today.month) != 12:
+            raise Exception(f"There is no Advent of Code puzzle for {today}!")
         day = int(today.day)
         year = int(today.year)
     else:

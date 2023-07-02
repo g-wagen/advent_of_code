@@ -1,6 +1,6 @@
 .env
 .venv
+.idea
 *.ipy*
 __pycache__
-.pdm.toml
-pdm.lock
+.pdm-python
