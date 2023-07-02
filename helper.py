@@ -2,11 +2,16 @@ from typing import Any
 
 import requests
 import datetime
-import os
 import dotenv
+from pathlib import Path
 
 
-def get_puzzle_input(y=None, d=None):
+def read_puzzle_input(input_path: str) -> list[str]:
+    with open(input_path, 'r') as f:
+        return f.read().splitlines()
+
+
+def get_puzzle_input(y: int = None, d: int = None):
     """Fetches Advent of Code puzzle input
 
     It reads a session cookie variable from a .env file in the parent directory.
@@ -17,13 +22,11 @@ def get_puzzle_input(y=None, d=None):
     :type y: int
     """
 
-    puzzle_input = None
-
     # Possibility to fetch any puzzle input or today's input
-    today = datetime.datetime.now()
+    today = datetime.date.today()
     if d is None and y is None:
-        day = int(today.strftime('%d'))
-        year = int(today.strftime('%Y'))
+        day = int(today.day)
+        year = int(today.year)
     else:
         day = d
         year = y
@@ -32,7 +35,7 @@ def get_puzzle_input(y=None, d=None):
 
     # Let's go easy on the webserver hosting the Advent of Code event and
     # download the puzzle input to a local file in case it doesn't exist yet
-    if not os.path.exists(puzzle_input_file):
+    if not Path(puzzle_input_file).exists():
         dotenv.load_dotenv()
         COOKIE = dotenv.get_key('../.env', 'AOC_SESSION_COOKIE')
 
@@ -47,18 +50,22 @@ def get_puzzle_input(y=None, d=None):
 
     # In case the file exists, just read it locally.
     # No point downloading it again.
-    with open(puzzle_input_file, 'r') as f:
-        puzzle_input = f.read().splitlines()
-
-    return puzzle_input
+    return read_puzzle_input(input_path=puzzle_input_file)
 
 
-def make_chunks(chunk_size, iterable):
+def choose_puzzle_input(y: int = None, d: int = None, sample_input_path: str = None):
+    if not sample_input_path:
+        return get_puzzle_input(y=y, d=d)
+    else:
+        return read_puzzle_input(input_path=sample_input_path)
+
+
+def make_chunks(chunk_size: int, iterable: list) -> list:
     chunks = []
     for i in range(0, len(iterable), chunk_size):
         chunks.append(iterable[i:i+chunk_size])
     return chunks
 
 
-def print_solution(solution: Any, y: int, d: int, part: int):
+def print_solution(solution: Any, y: int, d: int, part: int) -> None:
     print(f'{d:02d}.12.{y} {part}: {solution}')
