@@ -1,82 +1,65 @@
-from helper import get_puzzle_input, print_solution
-import numpy as np
-
-puzzle_input = get_puzzle_input(y=2022, d=9)
-with open("aoc_2022_09_inputsample.txt", "r") as f:
-    puzzle_input = f.read().splitlines()
-
-mapping = {"U": [0, 1], "D": [0, -1], "L": [-1, 0], "R": [1, 0]}
-
-head = [0, 0]
-tail = [0, 0]
-tail_positions: set = {(0, 0)}
+from helper import choose_puzzle_input, print_solution
+import math
 
 
-def together(h, t):
-    return abs(h[0] - t[0]) <= 1 and abs(h[1] - t[1]) <= 1
+puzzle_input = choose_puzzle_input(
+    y=2022,
+    d=9,
+    # sample_input_path="aoc_2022_09_inputsample.txt",
+)
+
+head_positions = [[1, 1]]
+
+for line in puzzle_input:
+    x, y = head_positions[-1]
+    direction, amount = line.split(" ")
+    for i in range(int(amount)):
+        if direction == "U":
+            y += 1
+        elif direction == "R":
+            x += 1
+        elif direction == "D":
+            y -= 1
+        elif direction == "L":
+            x -= 1
+        head_positions.append([x, y])
 
 
-def distance_x(hd, tl):
-    return abs(hd[0] - tl[0])
+tail_positions = [[1, 1]]
 
+for p, pos in enumerate(head_positions):
+    tail_x, tail_y = tail_positions[-1]
+    head_x, head_y = pos
 
-def distance_y(hd, tl):
-    return abs(hd[1] - tl[1])
+    direction_x = head_x - tail_x
+    direction_y = head_y - tail_y
 
-
-def distance(head, tail):
-    return tuple([distance_x(head, tail), distance_y(head, tail)])
-
-
-def move_head():
-    head[0] += mapping[direction][0]
-    head[1] += mapping[direction][1]
-    return head
-
-
-head_positions = list()
-
-for i in puzzle_input:
-    direction = str(i.split(" ")[0])
-    amount = int(i.split(" ")[1])
-
-    # move head
-    for j in range(amount):
-        move_head()
-        jo = tuple([head[0], head[1]])
-        head_positions.append(jo)
-
-special = []
-
-for h, hpos in enumerate(head_positions):
     try:
-        next_hpos = head_positions[h + 1]
-    except IndexError:
-        next_hpos = hpos
+        if direction_x > 0:
+            norm_direction_x = direction_x / direction_x
+        else:
+            norm_direction_x = -direction_x / direction_x
+    except ZeroDivisionError:
+        norm_direction_x = 0
+    try:
+        if direction_y > 0:
+            norm_direction_y = direction_y / direction_y
+        else:
+            norm_direction_y = -direction_y / direction_y
+    except ZeroDivisionError:
+        norm_direction_y = 0
 
-    if (distance(hpos, tail) or distance(next_hpos, tail)) <= (1, 1):
-        tail_positions.add(tuple(tail))
+    distance = math.dist([tail_x, tail_y], [head_x, head_y])
 
-    # up down left right
-    if (distance(hpos, tail) == (1, 0) and distance(next_hpos, tail) == (2, 0)) or (
-        distance(hpos, tail) == (0, 1) and distance(next_hpos, tail) == (0, 2)
-    ):
-        tail = hpos
-        tail_positions.add(tuple(hpos))
-
-    if distance(hpos, tail) == distance(next_hpos, tail):
-        tail_positions.add(tuple(tail))
-
-    if distance(hpos, tail) == (1, 1) and distance(next_hpos, tail) > (1, 1):
-        tail = head_positions.pop()
-        tail_positions.add(tuple(tail))
+    if distance >= 2:
+        tail_x += norm_direction_x
+        tail_y += norm_direction_y
+        tail_positions.append([tail_x, tail_y])
 
 
-field = np.full([8, 8], ".")
+unique_positions = []
+for tp in tail_positions:
+    if tp not in unique_positions:
+        unique_positions.append(tp)
 
-for p in tail_positions:
-    field[p] = "#"
-
-field[0, 0] = "s"
-
-print(np.rot90(field))
+print_solution(solution=len(unique_positions), y=2022, d=9, part=1)
