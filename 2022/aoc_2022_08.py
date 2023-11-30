@@ -9,12 +9,13 @@ make_grid: np.array = np.array([[y for y in x] for x in puzzle_input]).astype(in
 def is_visible(number, coords: list):
     row = make_grid[coords[0], :]
     col = make_grid[:, coords[1]]
-    left = all(number > row[:coords[1]])
-    right = all(number > row[coords[1]+1:])
-    above = all(number > col[:coords[0]])
-    below = all(number > col[coords[0]+1:])
+    left = all(number > row[: coords[1]])
+    right = all(number > row[coords[1] + 1 :])
+    above = all(number > col[: coords[0]])
+    below = all(number > col[coords[0] + 1 :])
 
     return any([left, right, above, below])
+
 
 border_trees = (make_grid.shape[0] * 2) + ((make_grid.shape[1] - 2) * 2)
 visible_counter = border_trees
@@ -22,10 +23,7 @@ visible_counter = border_trees
 for idx, x in np.ndenumerate(make_grid):
     # don't check outer border visibilities.
     # these are already calculated
-    if (
-            0 < idx[0] < make_grid.shape[0] - 1
-            and 0 < idx[1] < make_grid.shape[1] - 1
-    ):
+    if 0 < idx[0] < make_grid.shape[0] - 1 and 0 < idx[1] < make_grid.shape[1] - 1:
         if is_visible(x, idx):
             visible_counter += 1
 
@@ -48,9 +46,9 @@ def calculate_scenic_score(tree_coords, grid):
     x = tree_coords[1]
     y = tree_coords[0]
     above = grid[:y, x][::-1]
-    below = grid[y+1:, x]
+    below = grid[y + 1 :, x]
     left = grid[y, :x][::-1]
-    right = grid[y, x+1:]
+    right = grid[y, x + 1 :]
     above_score = calculate_dir_score(current, above)
     below_score = calculate_dir_score(current, below)
     left_score = calculate_dir_score(current, left)

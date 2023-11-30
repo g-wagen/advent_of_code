@@ -5,16 +5,18 @@ from pathfinding.core.grid import Grid
 from pathfinding.finder.dijkstra import DijkstraFinder, AStarFinder
 
 puzzle_input = get_puzzle_input(y=2022, d=12)
-with open('aoc_2022_12_inputsample.txt', 'r') as f:
+with open("aoc_2022_12_inputsample.txt", "r") as f:
     puzzle_input = f.read().splitlines()
 
-lowercase = {'S': 0}
-lowercase.update({l: i+1 for l, i in zip(ascii_lowercase, range(len(ascii_lowercase)))})
-lowercase.update({'E': len(ascii_lowercase)+1})
+lowercase = {"S": 0}
+lowercase.update(
+    {l: i + 1 for l, i in zip(ascii_lowercase, range(len(ascii_lowercase)))}
+)
+lowercase.update({"E": len(ascii_lowercase) + 1})
 
 axis_0 = len(puzzle_input)
 axis_1 = len(puzzle_input[0])
-data = [lowercase[x] for x in ''.join(puzzle_input)]
+data = [lowercase[x] for x in "".join(puzzle_input)]
 data = np.array(data).reshape((axis_0, axis_1))
 
 min_value = np.min(data)
@@ -43,4 +45,4 @@ for c, crds in enumerate(path):
 
 print(the_way)
 print(data)
-print_solution('solution', y=2022, d=12, part=1)
+print_solution("solution", y=2022, d=12, part=1)

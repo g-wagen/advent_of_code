@@ -8,11 +8,11 @@ prios_upper = {y: i + 1 + len(prios_lower) for i, y in enumerate(ascii_uppercase
 
 
 def first_comp(rucksack):
-    return rucksack[:len(rucksack) // 2]
+    return rucksack[: len(rucksack) // 2]
 
 
 def second_comp(rucksack):
-    return rucksack[len(rucksack)//2:]
+    return rucksack[len(rucksack) // 2 :]
 
 
 def get_extra(rucksack):

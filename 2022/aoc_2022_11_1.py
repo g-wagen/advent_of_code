@@ -8,6 +8,7 @@ import numpy as np
 
 class Monkey:
     inspection_counter = 0
+
     def __init__(self, items: list, operator, operand, test_value):
         self.items = items
         self.test_value = test_value
@@ -19,9 +20,9 @@ class Monkey:
     def business(self):
         for item in self.items:
             self.inspection_counter += 1
-            operand = item if self.operand == 'same' else self.operand
+            operand = item if self.operand == "same" else self.operand
 
-            worry_level = eval(f'{item} {self.operator} {operand}')
+            worry_level = eval(f"{item} {self.operator} {operand}")
 
             bored_level = worry_level // 3
 
@@ -39,14 +40,18 @@ class Monkey:
         self.monkey_false = monkey
 
 
-monkey0 = Monkey(items=[89, 74], operator='*', operand=5, test_value=17)
-monkey1 = Monkey(items=[75, 69, 87, 57, 84, 90, 66, 50], operator='+', operand=3, test_value=7)
-monkey2 = Monkey(items=[55], operator='+', operand=7, test_value=13)
-monkey3 = Monkey(items=[69, 82, 69, 56, 68], operator='+', operand=5, test_value=2)
-monkey4 = Monkey(items=[72, 97, 50], operator='+', operand=2, test_value=19)
-monkey5 = Monkey(items=[90, 84, 56, 92, 91, 91], operator='*', operand=19, test_value=3)
-monkey6 = Monkey(items=[63, 93, 55, 53], operator='*', operand='same', test_value=5)
-monkey7 = Monkey(items=[50, 61, 52, 58, 86, 68, 97], operator='+', operand=4, test_value=11)
+monkey0 = Monkey(items=[89, 74], operator="*", operand=5, test_value=17)
+monkey1 = Monkey(
+    items=[75, 69, 87, 57, 84, 90, 66, 50], operator="+", operand=3, test_value=7
+)
+monkey2 = Monkey(items=[55], operator="+", operand=7, test_value=13)
+monkey3 = Monkey(items=[69, 82, 69, 56, 68], operator="+", operand=5, test_value=2)
+monkey4 = Monkey(items=[72, 97, 50], operator="+", operand=2, test_value=19)
+monkey5 = Monkey(items=[90, 84, 56, 92, 91, 91], operator="*", operand=19, test_value=3)
+monkey6 = Monkey(items=[63, 93, 55, 53], operator="*", operand="same", test_value=5)
+monkey7 = Monkey(
+    items=[50, 61, 52, 58, 86, 68, 97], operator="+", operand=4, test_value=11
+)
 
 monkey0.set_monkey_true(monkey4)
 monkey0.set_monkey_false(monkey7)
@@ -82,7 +87,7 @@ for i in range(rounds):
 monkey_business = []
 for i, m in enumerate(monkeys):
     monkey_business.append(m.inspection_counter)
-    print(i, f'Monkey {i} inspected items {m.inspection_counter} times', m.items)
+    print(i, f"Monkey {i} inspected items {m.inspection_counter} times", m.items)
 
 solution = np.product(sorted(monkey_business)[-2:])
 

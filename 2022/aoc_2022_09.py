@@ -2,10 +2,10 @@ from helper import get_puzzle_input, print_solution
 import numpy as np
 
 puzzle_input = get_puzzle_input(y=2022, d=9)
-with open('aoc_2022_09_inputsample.txt', 'r') as f:
+with open("aoc_2022_09_inputsample.txt", "r") as f:
     puzzle_input = f.read().splitlines()
 
-mapping = {'U': [0, 1], 'D': [0, -1], 'L': [-1, 0], 'R': [1, 0]}
+mapping = {"U": [0, 1], "D": [0, -1], "L": [-1, 0], "R": [1, 0]}
 
 head = [0, 0]
 tail = [0, 0]
@@ -37,8 +37,8 @@ def move_head():
 head_positions = list()
 
 for i in puzzle_input:
-    direction = str(i.split(' ')[0])
-    amount = int(i.split(' ')[1])
+    direction = str(i.split(" ")[0])
+    amount = int(i.split(" ")[1])
 
     # move head
     for j in range(amount):
@@ -59,7 +59,8 @@ for h, hpos in enumerate(head_positions):
 
     # up down left right
     if (distance(hpos, tail) == (1, 0) and distance(next_hpos, tail) == (2, 0)) or (
-            distance(hpos, tail) == (0, 1) and distance(next_hpos, tail) == (0, 2)):
+        distance(hpos, tail) == (0, 1) and distance(next_hpos, tail) == (0, 2)
+    ):
         tail = hpos
         tail_positions.add(tuple(hpos))
 
@@ -71,12 +72,11 @@ for h, hpos in enumerate(head_positions):
         tail_positions.add(tuple(tail))
 
 
-
-field = np.full([8, 8], '.')
+field = np.full([8, 8], ".")
 
 for p in tail_positions:
-    field[p] = '#'
+    field[p] = "#"
 
-field[0, 0] = 's'
+field[0, 0] = "s"
 
 print(np.rot90(field))

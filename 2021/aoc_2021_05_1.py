@@ -21,23 +21,22 @@ def plotting(x1, x2, y1, y2, size_x, size_y):
 
 
 data = [
-    '0,9 -> 5,9',
-    '8,0 -> 0,8',
-    '9,4 -> 3,4',
-    '2,2 -> 2,1',
-    '7,0 -> 7,4',
-    '6,4 -> 2,0',
-    '0,9 -> 2,9',
-    '3,4 -> 1,4',
-    '0,0 -> 8,8',
-    '5,5 -> 8,2',
+    "0,9 -> 5,9",
+    "8,0 -> 0,8",
+    "9,4 -> 3,4",
+    "2,2 -> 2,1",
+    "7,0 -> 7,4",
+    "6,4 -> 2,0",
+    "0,9 -> 2,9",
+    "3,4 -> 1,4",
+    "0,0 -> 8,8",
+    "5,5 -> 8,2",
 ]
 
 data = helper.get_puzzle_input(d=5, y=2021)
 
-data = [x.replace(' -> ', ',') for x in data]
-data = np.array([int(x) for x in ','.join(data).split(',')])\
-    .reshape((len(data), 4))
+data = [x.replace(" -> ", ",") for x in data]
+data = np.array([int(x) for x in ",".join(data).split(",")]).reshape((len(data), 4))
 
 x1, x2 = data[:, 0], data[:, 2]
 y1, y2 = data[:, 1], data[:, 3]
@@ -54,12 +53,12 @@ x1, x2 = x1[keep], x2[keep]
 y1, y2 = y1[keep], y2[keep]
 
 # Generate the diagram template
-field = np.full((np.max([y1, y2])+1, np.max([x1, x2])+1), 0)
+field = np.full((np.max([y1, y2]) + 1, np.max([x1, x2]) + 1), 0)
 
 # Populate the field
 for i, (__x1, __x2, __y1, __y2) in enumerate(zip(x1, x2, y1, y2)):
-    xrange = np.arange(__x2, __x1+1) if __x1 > __x2 else np.arange(__x1, __x2 + 1)
-    yrange = np.arange(__y2, __y1+1) if __y1 > __y2 else np.arange(__y1, __y2 + 1)
+    xrange = np.arange(__x2, __x1 + 1) if __x1 > __x2 else np.arange(__x1, __x2 + 1)
+    yrange = np.arange(__y2, __y1 + 1) if __y1 > __y2 else np.arange(__y1, __y2 + 1)
 
     if len(xrange) > len(yrange):
         for x in xrange:
@@ -70,4 +69,4 @@ for i, (__x1, __x2, __y1, __y2) in enumerate(zip(x1, x2, y1, y2)):
 
 # Count the overlaps
 overlaps = len(field[field > 1])
-print(f'Overlapping count: {overlaps}')
+print(f"Overlapping count: {overlaps}")

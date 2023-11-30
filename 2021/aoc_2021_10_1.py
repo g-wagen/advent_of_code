@@ -2,23 +2,23 @@ import helper
 import numpy as np
 
 data = [
-    '[({(<(())[]>[[{[]{<()<>>',
-    '[(()[<>])]({[<{<<[]>>(',
-    '{([(<{}[<>[]}>{[]{[(<()>',
-    '(((({<>}<{<{<>}{[]{[]{}',
-    '[[<[([]))<([[{}[[()]]]',
-    '[{[{({}]{}}([{[{{{}}([]',
-    '{<[[]]>}<{[{[{[]{()[[[]',
-    '[<(<(<(<{}))><([]([]()',
-    '<{([([[(<>()){}]>(<<{{',
-    '<{([{{}}[<[[[<>{}]]]>[]]',
+    "[({(<(())[]>[[{[]{<()<>>",
+    "[(()[<>])]({[<{<<[]>>(",
+    "{([(<{}[<>[]}>{[]{[(<()>",
+    "(((({<>}<{<{<>}{[]{[]{}",
+    "[[<[([]))<([[{}[[()]]]",
+    "[{[{({}]{}}([{[{{{}}([]",
+    "{<[[]]>}<{[{[{[]{()[[[]",
+    "[<(<(<(<{}))><([]([]()",
+    "<{([([[(<>()){}]>(<<{{",
+    "<{([{{}}[<[[[<>{}]]]>[]]",
 ]
 
 data = helper.get_puzzle_input(d=10, y=2021)
-opening = '[({<'
-closing = '])}>'
+opening = "[({<"
+closing = "])}>"
 
-points = {']': 57, ')': 3, '}': 1197, '>': 25137}
+points = {"]": 57, ")": 3, "}": 1197, ">": 25137}
 
 score = []
 
@@ -35,10 +35,12 @@ for item in data:
                 stack.pop()
             else:
                 expected = closing.find(stack[-1])
-                print(f'{"".join(stack)} : Expected {closing[expected + 1]}, but found {c} instead!')
+                print(
+                    f'{"".join(stack)} : Expected {closing[expected + 1]}, but found {c} instead!'
+                )
                 score.append(points[c])
                 stop = True
         if stop:
             break
 
-print(f'\nPuzzle answer: {sum(score)}')
+print(f"\nPuzzle answer: {sum(score)}")

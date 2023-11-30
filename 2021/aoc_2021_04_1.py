@@ -21,19 +21,19 @@ data = """7, 4, 9, 5, 11, 17, 23, 2, 0, 14, 21, 24, 10, 16, 13, 6, 15, 25, 12, 2
 22 11 13  6  5
 2  0 12  3  7"""
 
-data = [x for x in data.split('\n')]
+data = [x for x in data.split("\n")]
 data = helper.get_puzzle_input(y=2021, d=4)
 
-inputs = np.array([int(x) for x in data[0].split(',')])
+inputs = np.array([int(x) for x in data[0].split(",")])
 
 
-grids = [x.strip().replace('  ', ' ') for x in data[1:] if len(x) > 1]
+grids = [x.strip().replace("  ", " ") for x in data[1:] if len(x) > 1]
 
 for i, bi in enumerate(grids):
     numbers = [int(x) for x in bi.split()]
     grids[i] = numbers
 
-dim = (int(len(grids)/5), 5, 5)
+dim = (int(len(grids) / 5), 5, 5)
 grids = np.array(grids).reshape(dim)
 
 stop = False
@@ -53,7 +53,7 @@ for num in inputs:
                 gridsum = int(np.sum(grid[np.logical_not(np.isnan(grid))]))
 
     if stop:
-        print(f'Winning number: {num}')
-        print(f'Board sum: {gridsum}')
-        print(f'Winning number * board sum: {num * gridsum}')
+        print(f"Winning number: {num}")
+        print(f"Board sum: {gridsum}")
+        print(f"Winning number * board sum: {num * gridsum}")
         break

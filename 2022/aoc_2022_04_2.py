@@ -10,7 +10,11 @@ redundant = 0
 
 for item in puzzle_input:
     assignments = get_assignment(item)
-    redundant += 1 if assignment_contains_other_partially(assignments.elf1, assignments.elf2) else 0
+    redundant += (
+        1
+        if assignment_contains_other_partially(assignments.elf1, assignments.elf2)
+        else 0
+    )
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     print_solution(redundant, 2022, 4, 2)

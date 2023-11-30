@@ -7,6 +7,7 @@ from helper import get_puzzle_input, print_solution
 
 class Monkey:
     inspection_counter = 0
+
     def __init__(self, items: list, operator, operand, test_value):
         self.items = items
         self.test_value = test_value
@@ -18,9 +19,9 @@ class Monkey:
     def business(self):
         for item in self.items:
             self.inspection_counter += 1
-            operand = item if self.operand == 'same' else self.operand
+            operand = item if self.operand == "same" else self.operand
 
-            worry_level = eval(f'{item} {self.operator} {operand}')
+            worry_level = eval(f"{item} {self.operator} {operand}")
 
             bored_level = worry_level // 3
 
@@ -38,10 +39,10 @@ class Monkey:
         self.monkey_false = monkey
 
 
-monkey0 = Monkey(items=[79, 98], operator='*', operand=19, test_value=23)
-monkey1 = Monkey(items=[54, 65, 75, 74], operator='+', operand=6, test_value=19)
-monkey2 = Monkey(items=[79, 60, 97], operator='*', operand='same', test_value=13)
-monkey3 = Monkey(items=[74], operator='+', operand=3, test_value=17)
+monkey0 = Monkey(items=[79, 98], operator="*", operand=19, test_value=23)
+monkey1 = Monkey(items=[54, 65, 75, 74], operator="+", operand=6, test_value=19)
+monkey2 = Monkey(items=[79, 60, 97], operator="*", operand="same", test_value=13)
+monkey3 = Monkey(items=[74], operator="+", operand=3, test_value=17)
 
 monkey0.set_monkey_true(monkey2)
 monkey0.set_monkey_false(monkey3)

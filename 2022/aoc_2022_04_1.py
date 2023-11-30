@@ -14,9 +14,9 @@ def calculate_range(elf_range: list) -> set:
 
 def get_assignment(assignment_string: str) -> Assignment:
     assignment = Assignment()
-    assignments = assignment_string.split(',')
-    assignment.elf1 = calculate_range(assignments[0].split('-'))
-    assignment.elf2 = calculate_range(assignments[1].split('-'))
+    assignments = assignment_string.split(",")
+    assignment.elf1 = calculate_range(assignments[0].split("-"))
+    assignment.elf2 = calculate_range(assignments[1].split("-"))
     return assignment
 
 
@@ -28,7 +28,9 @@ redundant = 0
 
 for item in puzzle_input:
     assignments = get_assignment(item)
-    redundant += 1 if assignment_contains_other(assignments.elf1, assignments.elf2) else 0
+    redundant += (
+        1 if assignment_contains_other(assignments.elf1, assignments.elf2) else 0
+    )
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     print_solution(redundant, 2022, 4, 1)

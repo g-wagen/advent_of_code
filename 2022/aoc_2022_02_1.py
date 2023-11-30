@@ -8,19 +8,19 @@ def play(input_data: str):
         # r, p, s
         [-1, 1, 0],  # r
         [0, -1, 1],  # p
-        [1, 0, -1]   # s
+        [1, 0, -1],  # s
     ]
 
     matrix_mapping = {
-        'A': 0,
-        'B': 1,
-        'C': 2,
-        'X': 0,
-        'Y': 1,
-        'Z': 2
+        "A": 0,
+        "B": 1,
+        "C": 2,
+        "X": 0,
+        "Y": 1,
+        "Z": 2,
     }
 
-    splititem = input_data.split(' ')
+    splititem = input_data.split(" ")
 
     my_shape = matrix_mapping[splititem[1]]
     my_shape_score = my_shape + 1

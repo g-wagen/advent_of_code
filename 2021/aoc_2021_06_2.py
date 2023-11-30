@@ -1,9 +1,9 @@
 import helper
 import numpy as np
 
-data = ['3,4,3,1,2']
+data = ["3,4,3,1,2"]
 data = helper.get_puzzle_input(d=6, y=2021)
-data = [int(x) for x in data[0].split(',')]
+data = [int(x) for x in data[0].split(",")]
 
 # Here I am changing the data format to an array with 9 items.
 # The array indices represent a fish state.
@@ -33,6 +33,6 @@ for d in range(1, days + 1):
         # All the fishes that have changed to state six will spawn new
         # fishes with state 8
         states_and_fishes[8] += remember
-    print(f'Day {d}: {np.sum(states_and_fishes)} fishes.')
+    print(f"Day {d}: {np.sum(states_and_fishes)} fishes.")
 
-print(f'Puzzle answer: {np.sum(states_and_fishes)}')
+print(f"Puzzle answer: {np.sum(states_and_fishes)}")

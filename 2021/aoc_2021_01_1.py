@@ -10,7 +10,7 @@ data = [
     240,
     269,
     260,
-    263
+    263,
 ]
 
 data = [int(x) for x in helper.get_puzzle_input(d=1, y=2021)]
@@ -24,4 +24,4 @@ for d in data[1:]:
 
     first = d
 
-print(f'increased {increase} times')
+print(f"increased {increase} times")

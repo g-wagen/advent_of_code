@@ -2,18 +2,18 @@ import helper
 import pandas as pd
 
 data = [
-    '00100',
-    '11110',
-    '10110',
-    '10111',
-    '10101',
-    '01111',
-    '00111',
-    '11100',
-    '10000',
-    '11001',
-    '00010',
-    '01010',
+    "00100",
+    "11110",
+    "10110",
+    "10111",
+    "10101",
+    "01111",
+    "00111",
+    "11100",
+    "10000",
+    "11001",
+    "00010",
+    "01010",
 ]
 
 data = helper.get_puzzle_input(d=3, y=2021)
@@ -55,11 +55,11 @@ def drop_values(df, oxy=True):
 
 
 oxy_calc = drop_values(oxy_df)
-oxy_rating = int(''.join([str(int(x)) for x in oxy_calc.values.flatten()]), 2)
-print(f'Oxygen generator rating: {oxy_rating}')
+oxy_rating = int("".join([str(int(x)) for x in oxy_calc.values.flatten()]), 2)
+print(f"Oxygen generator rating: {oxy_rating}")
 
 co2_calc = drop_values(co2_df, False)
-co2_rating = int(''.join([str(int(x)) for x in co2_calc.values.flatten()]), 2)
-print(f'Co2 scrubber rating: {co2_rating}')
+co2_rating = int("".join([str(int(x)) for x in co2_calc.values.flatten()]), 2)
+print(f"Co2 scrubber rating: {co2_rating}")
 
-print(f'Life support rating: {oxy_rating * co2_rating}')
+print(f"Life support rating: {oxy_rating * co2_rating}")
