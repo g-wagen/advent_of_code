@@ -5,7 +5,7 @@ import math
 puzzle_input = choose_puzzle_input(
     y=2022,
     d=9,
-    sample_input_path="aoc_2022_09_inputsample.txt",
+    # sample_input_path="aoc_2022_09_inputsample.txt",
 )
 
 head_positions = [[1, 1]]
