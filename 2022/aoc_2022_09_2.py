@@ -50,20 +50,20 @@ for line in puzzle_input:
 
 
 def move_rope(move_sequence: list, knots: int = 9):
-    all_positions = [move_sequence]
+    knot_positions = [move_sequence]
 
     for k in range(knots):
         calculate_positions = [[1, 1]]
-        for parent in all_positions[k]:
+        for parent in knot_positions[k]:
             x, y = calculate_positions[-1]
             calculate_positions.append(
                 knot_movement(
                     parent_x=parent[0], parent_y=parent[1], self_x=x, self_y=y
                 )
             )
-        all_positions.append(calculate_positions)
+        knot_positions.append(calculate_positions)
 
-    return all_positions[-1]
+    return knot_positions[-1]
 
 
 tail_positions = move_rope(move_sequence=head_positions, knots=9)
