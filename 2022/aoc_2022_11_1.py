@@ -1,9 +1,11 @@
-from helper import get_puzzle_input, print_solution
+from helper import choose_puzzle_input, print_solution
 import numpy as np
 
-# puzzle_input = get_puzzle_input(y=2022, d=11)
-# with open('aoc_2022_11_inputsample.txt', 'r') as f:
-#     puzzle_input = f.read().splitlines()
+puzzle_input = choose_puzzle_input(
+    y=2022,
+    d=11,
+    # sample_input_path="aoc_2022_11_inputsample.txt",
+)
 
 
 class Monkey:
@@ -40,54 +42,61 @@ class Monkey:
         self.monkey_false = monkey
 
 
-monkey0 = Monkey(items=[89, 74], operator="*", operand=5, test_value=17)
-monkey1 = Monkey(
-    items=[75, 69, 87, 57, 84, 90, 66, 50], operator="+", operand=3, test_value=7
-)
-monkey2 = Monkey(items=[55], operator="+", operand=7, test_value=13)
-monkey3 = Monkey(items=[69, 82, 69, 56, 68], operator="+", operand=5, test_value=2)
-monkey4 = Monkey(items=[72, 97, 50], operator="+", operand=2, test_value=19)
-monkey5 = Monkey(items=[90, 84, 56, 92, 91, 91], operator="*", operand=19, test_value=3)
-monkey6 = Monkey(items=[63, 93, 55, 53], operator="*", operand="same", test_value=5)
-monkey7 = Monkey(
-    items=[50, 61, 52, 58, 86, 68, 97], operator="+", operand=4, test_value=11
-)
+puzzle_input = [x.strip() for x in puzzle_input if x]
 
-monkey0.set_monkey_true(monkey4)
-monkey0.set_monkey_false(monkey7)
+monkeys_dict = {}
+current_monkey_id = 0
 
-monkey1.set_monkey_true(monkey3)
-monkey1.set_monkey_false(monkey2)
+for l in puzzle_input:
+    if l.startswith("Monkey"):
+        current_monkey_id = int(l.split()[-1].replace(":", ""))
+        monkeys_dict[current_monkey_id] = {}
+    elif l.startswith("Starting"):
+        all_items = l.split(":")[-1]
+        individual_items = all_items.split(",")
+        monkeys_dict[current_monkey_id]["items"] = [
+            int(item.strip()) for item in individual_items
+        ]
+    elif l.startswith("Operation"):
+        _, operator, operand = l.split("=")[-1].split()
+        monkeys_dict[current_monkey_id]["operator"] = operator
+        monkeys_dict[current_monkey_id]["operand"] = (
+            int(operand) if operand.isnumeric() else "same"
+        )
+    elif l.startswith("Test"):
+        monkeys_dict[current_monkey_id]["test_value"] = int(l.split()[-1].strip())
+    elif l.startswith("If true"):
+        monkeys_dict[current_monkey_id]["monkey_true"] = int(l.split()[-1].strip())
+    elif l.startswith("If false"):
+        monkeys_dict[current_monkey_id]["monkey_false"] = int(l.split()[-1].strip())
 
-monkey2.set_monkey_true(monkey0)
-monkey2.set_monkey_false(monkey7)
 
-monkey3.set_monkey_true(monkey0)
-monkey3.set_monkey_false(monkey2)
+monkey_objects = {}
 
-monkey4.set_monkey_true(monkey6)
-monkey4.set_monkey_false(monkey5)
+for monkey, attrs in monkeys_dict.items():
+    monkey_objects[monkey] = Monkey(
+        items=attrs["items"],
+        operator=attrs["operator"],
+        operand=attrs["operand"],
+        test_value=attrs["test_value"],
+    )
 
-monkey5.set_monkey_true(monkey6)
-monkey5.set_monkey_false(monkey1)
+for (monkey, attrs), (monkey_obj, monkey_obj_attr) in zip(
+    monkeys_dict.items(), monkey_objects.items()
+):
+    monkey_obj_attr.set_monkey_true(monkey_objects[attrs["monkey_true"]])
+    monkey_obj_attr.set_monkey_false(monkey_objects[attrs["monkey_false"]])
 
-monkey6.set_monkey_true(monkey3)
-monkey6.set_monkey_false(monkey1)
-
-monkey7.set_monkey_true(monkey5)
-monkey7.set_monkey_false(monkey4)
 
 rounds = 20
-monkeys = [monkey0, monkey1, monkey2, monkey3, monkey4, monkey5, monkey6, monkey7]
-
 for i in range(rounds):
-    for m in monkeys:
+    for j, m in monkey_objects.items():
         m.business()
 
 monkey_business = []
-for i, m in enumerate(monkeys):
+for i, (j, m) in enumerate(monkey_objects.items()):
     monkey_business.append(m.inspection_counter)
-    print(i, f"Monkey {i} inspected items {m.inspection_counter} times", m.items)
+    print(f"Monkey {i} inspected items {m.inspection_counter} times.")
 
 solution = np.product(sorted(monkey_business)[-2:])
 
