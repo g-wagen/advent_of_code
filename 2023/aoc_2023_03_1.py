@@ -7,7 +7,7 @@ day = 3
 puzzle_input = choose_puzzle_input(
     y=year,
     d=day,
-    # sample_input_path=f"aoc_{year}_{day:02d}_input_sample.txt",
+    sample_input_path=f"aoc_{year}_{day:02d}_input_sample.txt",
 )
 
 
@@ -63,6 +63,18 @@ for y, line in enumerate(puzzle_input):
 
 print(part_number_chars)
 
+
+def lowest_index(input_list: list[list], the_line: str, funky_chars: str):
+    lowest = len(input_list[0])
+    for char in funky_chars:
+        char_id = the_line.find(char)
+        if char_id < 0:
+            continue
+        elif char_id < lowest:
+            lowest = char_id
+    return lowest
+
+
 def read_from_index(input_array: list[list], y: int, x: int):
     cur_line = "".join(input_array[y])
 
@@ -71,26 +83,22 @@ def read_from_index(input_array: list[list], y: int, x: int):
     non_digit_chars = part_number_chars + " "
 
     # line beginning
-    lowest = len(input_array[0])
-    for char in non_digit_chars:
-        char_id = forward_line.find(char)
-        if char_id < 0:
-            continue
-        elif char_id < lowest:
-            lowest = char_id
+    forward_lowest = lowest_index(
+        input_list=input_array,
+        the_line=forward_line,
+        funky_chars=non_digit_chars,
+    )
 
-    beginning = forward_line[:lowest]
+    beginning = forward_line[:forward_lowest]
 
     # line end
-    lowest = len(input_array[0])
-    for char in non_digit_chars:
-        char_id = backward_line.find(char)
-        if char_id < 0:
-            continue
-        if char_id < lowest:
-            lowest = char_id
+    backward_lowest = lowest_index(
+        input_list=input_array,
+        the_line=backward_line,
+        funky_chars=non_digit_chars,
+    )
 
-    end = backward_line[:lowest]
+    end = backward_line[:backward_lowest]
 
     if len(beginning) == 1:
         part_number = end[::-1] + beginning
@@ -113,6 +121,22 @@ for s in symbols:
     r_x = sx + 1
     l_x = sx - 1
 
+    # for direction in [
+    #     [u_y, sx],
+    #     [u_y, r_x],
+    #     [sy, r_x],
+    #     [d_y, r_x],
+    #     [d_y, sx],
+    #     [d_y, l_x],
+    #     [sy, l_x],
+    #     [u_y, l_x],
+    # ]:
+    #     try:
+    #         content = schematic[direction[0]][direction[1]]
+    #         if content.isnumeric():
+    #             check_these.append([content[0], content[1]])
+    #     except:
+    #         content = None
     try:
         u = schematic[u_y][sx]
         if u.isnumeric():
@@ -162,10 +186,6 @@ for s in symbols:
     except IndexError:
         ul = None
 
-    adjacent = [u, ur, r, dr, d, dl, l, ul]
-    no_none = [adj for adj in adjacent if adj]
-    adjacents.append(no_none)
-
 print(check_these)
 
 for sch in schematic:
@@ -205,7 +225,9 @@ for p in part_numbers:
     print(p)
 
 for coords in check_these:
-    part_numbers.append(read_from_index(input_array=schematic, y=coords[0], x=coords[1]))
+    part_numbers.append(
+        read_from_index(input_array=schematic, y=coords[0], x=coords[1])
+    )
 
 
 print_solution(solution=sum(list(set(part_numbers))), y=year, d=day, part=1)
