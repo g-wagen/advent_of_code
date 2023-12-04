@@ -1,7 +1,7 @@
 from helper import choose_puzzle_input, print_solution
 
-year = 123456
-day = 1234567890
+year = 2023
+day = 00
 
 puzzle_input = choose_puzzle_input(
     y=year,
