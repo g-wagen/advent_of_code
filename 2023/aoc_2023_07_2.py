@@ -65,67 +65,67 @@ def adjust_cards_counter_for_j(cards_on_hand: str, cards_counter: dict) -> dict:
         return my_cards_counter
 
     elif j_count == 4:
-        my_cards_counter[1] = 0
-        my_cards_counter[4] = 0
         my_cards_counter[5] = 1
+        my_cards_counter[4] = 0
+        my_cards_counter[1] = 0
 
     elif j_count == 3:
         my_cards_counter[3] = 0
         if my_cards_counter[2] == 1:
-            my_cards_counter[2] = 0
             my_cards_counter[5] = 1
+            my_cards_counter[2] = 0
         elif my_cards_counter[1] == 2:
-            my_cards_counter[1] = 1
             my_cards_counter[4] = 1
+            my_cards_counter[1] = 1
 
     elif j_count == 2:
         my_cards_counter[2] -= 1
         if my_cards_counter[3] == 1:
+            my_cards_counter[5] = 1
             my_cards_counter[3] = 0
             my_cards_counter[2] = 0
-            my_cards_counter[5] = 1
         elif my_cards_counter[2] == 1:
             my_cards_counter[4] = 1
             my_cards_counter[3] = 0
             my_cards_counter[2] = 0
         elif my_cards_counter[1] == 3:
-            my_cards_counter[1] -= 1
             my_cards_counter[3] = 1
+            my_cards_counter[1] -= 1
 
     elif j_count == 1:
         if my_cards_counter[4] == 1:
-            my_cards_counter[1] = 0
-            my_cards_counter[4] = 0
             my_cards_counter[5] = 1
+            my_cards_counter[4] = 0
+            my_cards_counter[1] = 0
         elif my_cards_counter[3] == 1:
-            my_cards_counter[3] = 0
             my_cards_counter[4] = 1
+            my_cards_counter[3] = 0
             my_cards_counter[1] = 1
         elif my_cards_counter[2] == 2:
-            my_cards_counter[2] = 1
             my_cards_counter[3] = 1
+            my_cards_counter[2] = 1
             my_cards_counter[1] = 0
         elif my_cards_counter[2] == 1:
-            my_cards_counter[2] = 0
             my_cards_counter[3] = 1
+            my_cards_counter[2] = 0
             my_cards_counter[1] = 2
         elif my_cards_counter[1] == 5:
-            my_cards_counter[1] = 3
             my_cards_counter[2] = 1
+            my_cards_counter[1] = 3
         elif my_cards_counter[1] == 4:
             raise Exception("Can't have just 4 different cards without a fifth one!")
         elif my_cards_counter[1] == 3:
-            my_cards_counter[2] = 0
             my_cards_counter[3] = 1
+            my_cards_counter[2] = 0
             my_cards_counter[1] = 2
         elif my_cards_counter[1] == 2:
-            my_cards_counter[3] = 0
             my_cards_counter[4] = 1
+            my_cards_counter[3] = 0
             my_cards_counter[1] = 1
         elif my_cards_counter[1] == 1:
+            my_cards_counter[5] = 1
             my_cards_counter[4] = 0
             my_cards_counter[1] = 0
-            my_cards_counter[5] = 1
 
     return my_cards_counter
 
