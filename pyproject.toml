@@ -1,8 +1,7 @@
 [project]
 
 dependencies = [
-    "black>=20.0",
-    "ruff>=0.0.275",
+    "ruff>=0.1.7",
     "python-dotenv>=0.21.0",
     "requests>=2.28.1",
     "scipy>=1.9.3",
@@ -20,8 +19,23 @@ license = {text = ""}
 [tool]
 [tool.pdm]
 
+
 [tool.pdm.scripts]
 black = "black ."
+
+
+[tool.ruff]
+extend-exclude = [
+    ".txt",
+]
+
+extend-select = [
+    "E203",
+]
+
+line-length = 80
+indent-width = 4
+target-version = "py39"
 
 
 [build-system]
