@@ -82,13 +82,11 @@ cards_and_values_and_such = []
 
 for line in puzzle_input:
     hand, bid = line.split()
-    cards_and_values_and_such.append(
-        {
-            "hand": hand,
-            "strength": f"{hand_type(hand)}{relative_hand_strength(hand)}",
-            "bid": int(bid),
-        }
-    )
+    cards_and_values_and_such.append({
+        "hand": hand,
+        "strength": f"{hand_type(hand)}{relative_hand_strength(hand)}",
+        "bid": int(bid),
+    })
 
 total_winnings = 0
 

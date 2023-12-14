@@ -70,7 +70,9 @@ summed_dirs_and_sizes = {}
 for d, s in dirs_and_sizes.items():
     summed_dirs_and_sizes[d] = sum(s)
 
-summed_dirs_and_sizes = dict(sorted(summed_dirs_and_sizes.items(), key=lambda x: x[1]))
+summed_dirs_and_sizes = dict(
+    sorted(summed_dirs_and_sizes.items(), key=lambda x: x[1])
+)
 
 for k, v in summed_dirs_and_sizes.items():
     if v >= too_big_by_this_much:

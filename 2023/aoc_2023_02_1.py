@@ -31,4 +31,3 @@ for line in puzzle_input:
 
 
 print_solution(solution=sum(games), y=year, d=day, part=1)
-

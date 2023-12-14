@@ -72,8 +72,7 @@ class CaveSystem:
         elif there == "end":
             return
 
-    def no_go(self):
-        ...
+    def no_go(self): ...
 
     # start
     # find neighbors

@@ -4,7 +4,9 @@ from helper import get_puzzle_input, make_chunks
 puzzle_input = get_puzzle_input(y=2022, d=3)
 
 prios_lower = {x: i + 1 for i, x in enumerate(ascii_lowercase)}
-prios_upper = {y: i + 1 + len(prios_lower) for i, y in enumerate(ascii_uppercase)}
+prios_upper = {
+    y: i + 1 + len(prios_lower) for i, y in enumerate(ascii_uppercase)
+}
 
 
 def find_common_item(rucksacks):

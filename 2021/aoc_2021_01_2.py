@@ -26,7 +26,11 @@ for i, d in enumerate(data):
     next_section = data[i + 1 : i + 4]
     next_section_sum = sum(next_section)
 
-    if len(section) == 3 and len(next_section) == 3 and section_sum < next_section_sum:
+    if (
+        len(section) == 3
+        and len(next_section) == 3
+        and section_sum < next_section_sum
+    ):
         increase += 1
 
 print(f"increased {increase} times")

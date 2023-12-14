@@ -12,7 +12,9 @@ for item in puzzle_input:
     assignments = get_assignment(item)
     redundant += (
         1
-        if assignment_contains_other_partially(assignments.elf1, assignments.elf2)
+        if assignment_contains_other_partially(
+            assignments.elf1, assignments.elf2
+        )
         else 0
     )
 

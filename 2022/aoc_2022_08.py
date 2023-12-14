@@ -3,7 +3,9 @@ import numpy as np
 
 puzzle_input = get_puzzle_input(y=2022, d=8)
 
-make_grid: np.array = np.array([[y for y in x] for x in puzzle_input]).astype(int)
+make_grid: np.array = np.array([[y for y in x] for x in puzzle_input]).astype(
+    int
+)
 
 
 def is_visible(number, coords: list):
@@ -23,7 +25,10 @@ visible_counter = border_trees
 for idx, x in np.ndenumerate(make_grid):
     # don't check outer border visibilities.
     # these are already calculated
-    if 0 < idx[0] < make_grid.shape[0] - 1 and 0 < idx[1] < make_grid.shape[1] - 1:
+    if (
+        0 < idx[0] < make_grid.shape[0] - 1
+        and 0 < idx[1] < make_grid.shape[1] - 1
+    ):
         if is_visible(x, idx):
             visible_counter += 1
 

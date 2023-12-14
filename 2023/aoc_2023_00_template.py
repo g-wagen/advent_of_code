@@ -10,8 +10,7 @@ puzzle_input = choose_puzzle_input(
 )
 
 
-for line in puzzle_input:
-    ...
+for line in puzzle_input: ...
 
 print_solution(solution=0, y=year, d=day, part=1)
 

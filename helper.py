@@ -58,7 +58,9 @@ def get_puzzle_input(y: int = None, d: int = None) -> list[str]:
     return read_puzzle_input(input_path=puzzle_input_file)
 
 
-def choose_puzzle_input(y: int = None, d: int = None, sample_input_path: str = None):
+def choose_puzzle_input(
+    y: int = None, d: int = None, sample_input_path: str = None
+):
     if not sample_input_path:
         return get_puzzle_input(y=y, d=d)
     else:

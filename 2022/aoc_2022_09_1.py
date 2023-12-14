@@ -23,6 +23,7 @@ def signed_normalize(dir):
 
     return norm_dir
 
+
 def knot_movement(parent_x: int, parent_y: int, self_x: int, self_y: int):
     distance = math.dist([self_x, self_y], [parent_x, parent_y])
 

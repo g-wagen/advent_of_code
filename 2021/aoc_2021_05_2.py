@@ -35,7 +35,10 @@ data = [
 data = helper.get_puzzle_input(d=5, y=2021)
 
 data = [x.replace(" -> ", ",") for x in data]
-data = np.array([int(x) for x in ",".join(data).split(",")]).reshape((len(data), 4))
+data = np.array([int(x) for x in ",".join(data).split(",")]).reshape((
+    len(data),
+    4,
+))
 
 # X Coordinates
 x1, x2 = data[:, 0], data[:, 2]

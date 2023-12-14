@@ -64,11 +64,17 @@ for l in puzzle_input:
             int(operand) if operand.isnumeric() else "same"
         )
     elif l.startswith("Test"):
-        monkeys_dict[current_monkey_id]["test_value"] = int(l.split()[-1].strip())
+        monkeys_dict[current_monkey_id]["test_value"] = int(
+            l.split()[-1].strip()
+        )
     elif l.startswith("If true"):
-        monkeys_dict[current_monkey_id]["monkey_true"] = int(l.split()[-1].strip())
+        monkeys_dict[current_monkey_id]["monkey_true"] = int(
+            l.split()[-1].strip()
+        )
     elif l.startswith("If false"):
-        monkeys_dict[current_monkey_id]["monkey_false"] = int(l.split()[-1].strip())
+        monkeys_dict[current_monkey_id]["monkey_false"] = int(
+            l.split()[-1].strip()
+        )
 
 
 monkey_objects = {}

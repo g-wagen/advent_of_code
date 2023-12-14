@@ -57,7 +57,11 @@ def next_connection(
 
     tile_up, tile_down, tile_left, tile_right = None, None, None, None
 
-    if up >= 0 and maze[up][x] in ["7", "F", "|"] and maze[y][x] in ["L", "J", "|"]:
+    if (
+        up >= 0
+        and maze[up][x] in ["7", "F", "|"]
+        and maze[y][x] in ["L", "J", "|"]
+    ):
         tile_up = [up, x]
     if (
         down < len(maze)
@@ -65,7 +69,11 @@ def next_connection(
         and maze[y][x] in ["7", "F", "|"]
     ):
         tile_down = [down, x]
-    if left >= 0 and maze[y][left] in ["L", "F", "-"] and maze[y][x] in ["7", "J", "-"]:
+    if (
+        left >= 0
+        and maze[y][left] in ["L", "F", "-"]
+        and maze[y][x] in ["7", "J", "-"]
+    ):
         tile_left = [y, left]
     if (
         right < len(maze[0])
@@ -95,10 +103,14 @@ visited_2.append(start_conns[1])
 
 while visited_1[-1] != visited_2[-1]:
     visited_1.append(
-        next_connection(maze=puzzle_input, startpos=visited_1[-1], prevpos=visited_1)
+        next_connection(
+            maze=puzzle_input, startpos=visited_1[-1], prevpos=visited_1
+        )
     )
     visited_2.append(
-        next_connection(maze=puzzle_input, startpos=visited_2[-1], prevpos=visited_2)
+        next_connection(
+            maze=puzzle_input, startpos=visited_2[-1], prevpos=visited_2
+        )
     )
 
 

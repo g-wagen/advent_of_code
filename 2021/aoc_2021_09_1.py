@@ -39,7 +39,11 @@ for r, row in enumerate(data):
 print("Low points\n", low_points[np.logical_not(np.isnan(low_points))], "\n")
 risk_levels = low_points + 1
 
-print("Risk levels:\n", risk_levels[np.logical_not(np.isnan(risk_levels))], "\n")
+print(
+    "Risk levels:\n", risk_levels[np.logical_not(np.isnan(risk_levels))], "\n"
+)
 
-risk_levels_sum = int(np.sum(risk_levels[np.logical_not(np.isnan(risk_levels))]))
+risk_levels_sum = int(
+    np.sum(risk_levels[np.logical_not(np.isnan(risk_levels))])
+)
 print(f"Puzzle answer: {risk_levels_sum}")

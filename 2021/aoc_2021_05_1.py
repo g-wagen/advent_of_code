@@ -36,7 +36,10 @@ data = [
 data = helper.get_puzzle_input(d=5, y=2021)
 
 data = [x.replace(" -> ", ",") for x in data]
-data = np.array([int(x) for x in ",".join(data).split(",")]).reshape((len(data), 4))
+data = np.array([int(x) for x in ",".join(data).split(",")]).reshape((
+    len(data),
+    4,
+))
 
 x1, x2 = data[:, 0], data[:, 2]
 y1, y2 = data[:, 1], data[:, 3]
@@ -57,8 +60,12 @@ field = np.full((np.max([y1, y2]) + 1, np.max([x1, x2]) + 1), 0)
 
 # Populate the field
 for i, (__x1, __x2, __y1, __y2) in enumerate(zip(x1, x2, y1, y2)):
-    xrange = np.arange(__x2, __x1 + 1) if __x1 > __x2 else np.arange(__x1, __x2 + 1)
-    yrange = np.arange(__y2, __y1 + 1) if __y1 > __y2 else np.arange(__y1, __y2 + 1)
+    xrange = (
+        np.arange(__x2, __x1 + 1) if __x1 > __x2 else np.arange(__x1, __x2 + 1)
+    )
+    yrange = (
+        np.arange(__y2, __y1 + 1) if __y1 > __y2 else np.arange(__y1, __y2 + 1)
+    )
 
     if len(xrange) > len(yrange):
         for x in xrange:
