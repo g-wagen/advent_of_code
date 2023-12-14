@@ -62,12 +62,16 @@ def has_symbols(puzzle, sym: str, y: int, x1: int, x2: int) -> bool:
     # oben links
     chars += puzzle[above][left] if above >= 0 and left >= 0 else ""
     # oben rechts
-    chars += puzzle[above][right] if above >= 0 and right < len(puzzle[y]) else ""
+    chars += (
+        puzzle[above][right] if above >= 0 and right < len(puzzle[y]) else ""
+    )
     # unten links
     chars += puzzle[below][left] if below < len(puzzle) and left >= 0 else ""
     # unten rechts
     chars += (
-        puzzle[below][right] if below < len(puzzle) and right < len(puzzle[y]) else ""
+        puzzle[below][right]
+        if below < len(puzzle) and right < len(puzzle[y])
+        else ""
     )
     # oben
     chars += puzzle[above][left:right] if above >= 0 else ""
@@ -86,7 +90,11 @@ def has_symbols(puzzle, sym: str, y: int, x1: int, x2: int) -> bool:
 for y, anr in enumerate(all_numeric_ranges):
     for part in anr:
         if has_symbols(
-            puzzle=puzzle_input, sym=part_number_chars, y=y, x1=part[0], x2=part[1]
+            puzzle=puzzle_input,
+            sym=part_number_chars,
+            y=y,
+            x1=part[0],
+            x2=part[1],
         ):
             total.append(int(puzzle_input[y][part[0] : part[1] + 1]))
 
