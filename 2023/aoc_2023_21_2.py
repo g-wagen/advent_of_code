@@ -1,5 +1,4 @@
 from helper import choose_puzzle_input, print_solution
-from time import perf_counter
 
 year = 2023
 day = 21
@@ -49,34 +48,34 @@ def find_start(terrain: list[list[int]]) -> tuple[int, int]:
                 return y, x
 
 
-start_position = find_start(terrain=the_map)
+def calculate_reached_garden_plots(terrain: list[list[int]], steps: int) -> int:
+    start_position = find_start(terrain=terrain)
 
-max_steps = 10
-
-positions_collection = [
-    walk_everywhere(
-        terrain=the_map,
-        y=start_position[0],
-        x=start_position[1],
-    )
-]
-
-start = perf_counter()
-
-chunk_size = 10000
-
-for i in range(1, max_steps):
-    new_positions = []
-    for pos in positions_collection[-1]:
-        new_positions.extend(
-            walk_everywhere(terrain=the_map, y=pos[0], x=pos[1])
+    positions_collection = [
+        walk_everywhere(
+            terrain=terrain,
+            y=start_position[0],
+            x=start_position[1],
         )
-    positions_collection.append(list(set(new_positions)))
-    del positions_collection[0]
+    ]
 
-end = perf_counter() - start
+    for i in range(1, steps):
+        new_positions = []
+        for pos in positions_collection[-1]:
+            new_positions.extend(
+                walk_everywhere(terrain=terrain, y=pos[0], x=pos[1])
+            )
+        positions_collection.append(list(set(new_positions)))
+        del positions_collection[0]
 
-reached_plots = len(positions_collection[-1])
+    reached_plots = len(positions_collection[-1])
+    return reached_plots
 
-print_solution(solution=reached_plots, y=year, d=day, part=2)
-print(f"Execution time: {end} seconds")
+
+# Who wants to wait forever?
+print_solution(
+    solution=calculate_reached_garden_plots(terrain=the_map, steps=26501365),
+    y=year,
+    d=day,
+    part=2,
+)
