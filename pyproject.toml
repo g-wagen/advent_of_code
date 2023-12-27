@@ -11,6 +11,7 @@ dependencies = [
     "pathfinding>=1.0.1",
     "networkx[all]>=3.1",
     "pytest>=7.4.3",
+    "tqdm>=4.66.1",
 ]
 
 requires-python = ">=3.9, <3.10"
