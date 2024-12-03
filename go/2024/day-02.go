@@ -19,11 +19,37 @@ func checksafe(levels []int) bool {
 		}
 	}
 
-	if optimal == safe {
-		return true
-	}
+	return optimal == safe
+}
 
-	return false
+func day02part1(file *os.File) int {
+	scanner := bufio.NewScanner(file)
+
+	total := 0
+
+	for scanner.Scan() {
+		fields := strings.Fields(scanner.Text())
+		fieldsi := []int{}
+
+		for _, v := range fields {
+			iv, _ := strconv.Atoi(v)
+			fieldsi = append(fieldsi, iv)
+		}
+
+		fieldsir := []int{}
+
+		for _, v := range fieldsi {
+			fieldsir = append(fieldsir, v)
+		}
+
+		slices.Reverse(fieldsir)
+
+		if checksafe(fieldsi) || checksafe(fieldsir) {
+			total++
+		}
+
+	}
+	return total
 }
 
 func permutate(levels []int) [][]int {
@@ -49,9 +75,7 @@ func dampener(levels []int) bool {
 		return true
 	}
 
-	permutations := permutate(levels)
-
-	for _, v := range permutations {
+mfor _, v := range permutate(levels) {
 		if checksafe(v) {
 			return true
 		}
@@ -60,15 +84,7 @@ func dampener(levels []int) bool {
 	return false
 }
 
-func main() {
-	file, error := os.Open(os.Args[1])
-
-	if error != nil {
-		fmt.Println(error)
-		return
-	}
-	defer file.Close()
-
+func day02part2(file *os.File) int {
 	scanner := bufio.NewScanner(file)
 
 	total := 0
@@ -93,5 +109,26 @@ func main() {
 		}
 	}
 
-	fmt.Println(total)
+	return total
+}
+
+
+
+
+func main() {
+	file, error := os.Open(os.Args[1])
+
+	if error != nil {
+		fmt.Println(error)
+		return
+
+	}
+
+	defer file.Close()
+
+	fmt.Println("Solution Day 2 Part 1: ", day02part1(file))
+
+	file.Seek(0, 0)
+
+	fmt.Println("Solution Day 2 Part 2: ", day02part2(file))
 }

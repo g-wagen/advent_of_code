@@ -1,27 +1,34 @@
 format:
 	gofmt -w *.go
 
-
-build22:
+day01build:
 	mkdir -p build
-	go build -o build/02-2 02-2.go
-	chmod +x build/02-2
+	go build -o build/day-01 day-01.go
+	chmod +x build/day-01
 
-run22:
-	./build/02-2 02-input.txt
+day01run:
+	./build/day-01 day-01-input.txt
 
-build31:
+day02build:
 	mkdir -p build
-	go build -o build/03-1 03-1.go
-	chmod +x build/03-1
+	go build -o build/day-02 day-02.go
+	chmod +x build/day-02
 
-run31:
-	./build/03-1 03-input.txt
+day02run:
+	./build/day-02 day-02-input.txt
 
-build32:
+day03build:
 	mkdir -p build
-	go build -o build/03-2 03-2.go
-	chmod +x build/03-2
+	go build -o build/day-03 day-03.go
+	chmod +x build/day-03
 
-run32:
-	./build/03-2 03-input.txt
+day03run:
+	./build/day-03 day-03-input.txt
+
+day04build:
+	mkdir -p build
+	go build -o build/day-04 day-04.go
+	chmod +x build/day-04
+
+day04run:
+	./build/day-04 day-04-input.txt
