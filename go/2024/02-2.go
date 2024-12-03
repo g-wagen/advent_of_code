@@ -1,13 +1,12 @@
 package main
 
 import (
-	"bufio"
+    "bufio"
 	"fmt"
-	"os"
+    "os"
 	"slices"
-	"sort"
-	"strconv"
-	"strings"
+    "strconv"
+    "strings"
 )
 
 func checksafe(levels []int) bool {
@@ -27,9 +26,8 @@ func checksafe(levels []int) bool {
 	return false
 }
 
-
-func permute(levels []int) [][]int {
-    output := [][]int{}
+func permutate(levels []int) [][]int {
+	output := [][]int{}
 	for i, _ := range levels {
 		temp := []int{}
 		if i == 0 {
@@ -45,27 +43,43 @@ func permute(levels []int) [][]int {
 		if i == len(levels)-1 {
 			temp = levels[:len(levels)-1]
 		}
-        output = append(output, temp)
-    }
-    return output
+		output = append(output, temp)
+	}
+	return output
 }
 
+func dampener(levels []int) bool {
+    if checksafe(levels) {
+        return true
+    }
 
-func reportsafe(levels []int) bool {
-	if sort.IntsAreSorted(levels) {
-		return checksafe(levels)
-	} else {
-        permutations := permute(levels)
-        for i := 0; i < len(permutations); i++ {
-            return checksafe(permutations[i])
-            }
-            
+	permutations := permutate(levels)
+
+	for _, v := range permutations {
+        if checksafe(v) {
+            return true
+        }
 	}
-	return false
+
+	slices.Reverse(levels)
+
+    if checksafe(levels) {
+        return true
+    }
+
+	permutations = permutate(levels)
+
+	for _, v := range permutations {
+        if checksafe(v) {
+            return true
+        }
+	}
+
+    return false
 }
 
 func main() {
-	file, error := os.Open("02-1-sample.txt")
+	file, error := os.Open(os.Args[1])
 
 	if error != nil {
 		fmt.Println(error)
@@ -78,32 +92,17 @@ func main() {
 	total := 0
 
 	for scanner.Scan() {
-		fields := strings.Fields(scanner.Text())
-		fieldsi := []int{}
+		flds := strings.Fields(scanner.Text())
+		fields := []int{}
 
-		for _, v := range fields {
+		for _, v := range flds {
 			iv, _ := strconv.Atoi(v)
-			fieldsi = append(fieldsi, iv)
+			fields = append(fields, iv)
 		}
 
-		fieldsir := []int{}
-
-		for _, v := range fieldsi {
-			fieldsir = append(fieldsir, v)
-		}
-
-		slices.Reverse(fieldsir)
-
-	    fmt.Println(fields)	
-
-        if reportsafe(fieldsi) {
-			total++
-		} else {
-            if reportsafe(fieldsir) {
-                total++
-            }
+        if dampener(fields) {
+            total++
         }
-
-	}
-	fmt.Println(total)
+    }
+    fmt.Println(total)
 }
