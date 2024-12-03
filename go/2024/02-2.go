@@ -1,12 +1,12 @@
 package main
 
 import (
-    "bufio"
+	"bufio"
 	"fmt"
-    "os"
+	"os"
 	"slices"
-    "strconv"
-    "strings"
+	"strconv"
+	"strings"
 )
 
 func checksafe(levels []int) bool {
@@ -34,11 +34,7 @@ func permutate(levels []int) [][]int {
 			temp = levels[1:]
 		}
 		if i > 0 && i < len(levels)-1 {
-			before := []int{}
-			after := []int{}
-			before = levels[:i]
-			after = levels[i+1 : len(levels)]
-			temp = slices.Concat(before, after)
+			temp = slices.Concat(levels[:i], levels[i+1:len(levels)])
 		}
 		if i == len(levels)-1 {
 			temp = levels[:len(levels)-1]
@@ -49,33 +45,19 @@ func permutate(levels []int) [][]int {
 }
 
 func dampener(levels []int) bool {
-    if checksafe(levels) {
-        return true
-    }
+	if checksafe(levels) {
+		return true
+	}
 
 	permutations := permutate(levels)
 
 	for _, v := range permutations {
-        if checksafe(v) {
-            return true
-        }
+		if checksafe(v) {
+			return true
+		}
 	}
 
-	slices.Reverse(levels)
-
-    if checksafe(levels) {
-        return true
-    }
-
-	permutations = permutate(levels)
-
-	for _, v := range permutations {
-        if checksafe(v) {
-            return true
-        }
-	}
-
-    return false
+	return false
 }
 
 func main() {
@@ -100,9 +82,16 @@ func main() {
 			fields = append(fields, iv)
 		}
 
-        if dampener(fields) {
-            total++
-        }
-    }
-    fmt.Println(total)
+		if dampener(fields) {
+			total++
+		}
+
+		slices.Reverse(fields)
+
+		if dampener(fields) {
+			total++
+		}
+	}
+
+	fmt.Println(total)
 }
