@@ -22,13 +22,13 @@ func main() {
 
 	total := 0
 
+	doIt := true
+
 	for scanner.Scan() {
 		puzzleInput := scanner.Text()
 		pattern := regexp.MustCompile(`mul\(\d{1,3},\d{1,3}\)|do\(\)|don't\(\)`)
 
 		found := pattern.FindAllString(puzzleInput, -1)
-
-		doIt := true
 
 		for _, v := range found {
 			if v == "do()" {
