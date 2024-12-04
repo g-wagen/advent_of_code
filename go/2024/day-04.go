@@ -4,18 +4,29 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"regexp"
-	"strconv"
+	_ "regexp"
+	_ "slices"
+	_ "strconv"
 	"strings"
 )
+
+func countHoriz(line []string) int {
+	return strings.Count(strings.Join(line, ""), "XMAS") + strings.Count(strings.Join(line, ""), "SAMX")
+}
 
 func day04part1(file *os.File) int {
 	scanner := bufio.NewScanner(file)
 	total := 0
 
+	canvas := [][]string{}
+
 	for scanner.Scan() {
-		//puzzleInput := scanner.Text()
+		puzzleInput := scanner.Text()
+		currentLine := strings.Split(puzzleInput, "")
+		canvas = append(canvas, currentLine)
+		fmt.Println(currentLine, countHoriz(currentLine))
 	}
+
 	return total
 }
 
