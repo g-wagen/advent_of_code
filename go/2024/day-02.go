@@ -71,16 +71,11 @@ func permutate(levels []int) [][]int {
 }
 
 func dampener(levels []int) bool {
-	if checksafe(levels) {
-		return true
-	}
-
-mfor _, v := range permutate(levels) {
+	for _, v := range permutate(levels) {
 		if checksafe(v) {
 			return true
 		}
 	}
-
 	return false
 }
 
@@ -111,9 +106,6 @@ func day02part2(file *os.File) int {
 
 	return total
 }
-
-
-
 
 func main() {
 	file, error := os.Open(os.Args[1])
