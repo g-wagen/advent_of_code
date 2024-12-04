@@ -31,4 +31,4 @@ day04build:
 	chmod +x build/day-04
 
 day04run:
-	./build/day-04 day-04-sample-1.txt
+	./build/day-04 day-04-input.txt
