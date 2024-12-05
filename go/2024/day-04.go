@@ -3,61 +3,23 @@ package main
 import (
 	"bufio"
 	"fmt"
-	_ "math"
 	"os"
-	_ "regexp"
 	"slices"
-	_ "strconv"
 	"strings"
 )
 
 func countLine(line []string) int {
+	// counts all XMAS and SMAX in one line
 	return strings.Count(strings.Join(line, ""), "XMAS") + strings.Count(strings.Join(line, ""), "SAMX")
 }
 
 func countAll(puzzle [][]string) int {
+	// counts all occurences of XMAS and SMAX in one array
 	total := 0
 	for _, row := range puzzle {
 		total += countLine(row)
 	}
 	return total
-}
-
-func diagDesc(puzzle [][]string) [][]string {
-	// Shifts the puzzle rows that the diagonal descending lines become vertical
-	rotated := [][]string{}
-	for r, row := range puzzle {
-		rl := len(row)
-		safeIndex := r % rl
-		newRow := slices.Concat(row[safeIndex:], row[:safeIndex])
-		rotated = append(rotated, newRow)
-	}
-	return rotated
-}
-
-func diagAsc(puzzle [][]string) [][]string {
-	// Shifts the puzzle rows that the diagonal ascending lines become vertical
-	// It is weird to reverse the slice twice
-	rotated := [][]string{}
-	for r, row := range puzzle {
-		rl := len(row)
-		safeIndex := r % rl
-
-		tempRow := []string{}
-		for _, item := range slices.Backward(row) {
-			tempRow = append(tempRow, item)
-		}
-
-		newRow := slices.Concat(tempRow[safeIndex:], tempRow[:safeIndex])
-/*
-		tempRow2 := []string{}
-		for _, item := range slices.Backward(newRow) {
-			tempRow2 = append(tempRow2, item)
-		}
-*/
-		rotated = append(rotated, newRow)
-	}
-	return rotated
 }
 
 func rot90(puzzle [][]string) [][]string {
@@ -80,6 +42,38 @@ func rot90(puzzle [][]string) [][]string {
 
 }
 
+func collectDiagDesc(puzzle [][]string) [][]string {
+	// collects all array elements diagonally descending
+	numRows := len(puzzle)
+	numCols := len(puzzle[0])
+
+	output := [][]string{}
+
+	for r, row := range puzzle {
+		if r == 0 {
+			for c := range row {
+				temp := []string{}
+				for y := 0; y < numRows; y++ {
+					if c+y < numCols {
+						temp = append(temp, puzzle[y][c+y])
+					}
+				}
+				output = append(output, temp)
+			}
+		}
+		if r > 0 {
+			temp2 := []string{}
+			for c := 0; c < numCols; c++ {
+				if r+c < numRows {
+					temp2 = append(temp2, puzzle[r+c][c])
+				}
+			}
+			output = append(output, temp2)
+		}
+	}
+	return output
+}
+
 func day04part1(file *os.File) int {
 	scanner := bufio.NewScanner(file)
 	total := 0
@@ -92,8 +86,8 @@ func day04part1(file *os.File) int {
 
 	total += countAll(canvas)
 	total += countAll(rot90(canvas))
-	total += countAll(rot90(diagDesc(canvas)))
-	total += countAll(rot90(diagAsc(canvas)))
+	total += countAll(collectDiagDesc(canvas))
+	total += countAll(collectDiagDesc(rot90(canvas)))
 
 	return total
 }
