@@ -12,7 +12,8 @@ func count(puzzle [][]string) int {
 	// counts all occurences of XMAS and SMAX in one array
 	total := 0
 	for _, row := range puzzle {
-		total += strings.Count(strings.Join(row, ""), "XMAS") + strings.Count(strings.Join(row, ""), "SAMX")
+		total += strings.Count(strings.Join(row, ""), "XMAS")
+        total += strings.Count(strings.Join(row, ""), "SAMX")
 	}
 	return total
 }
