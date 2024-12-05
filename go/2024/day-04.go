@@ -8,16 +8,11 @@ import (
 	"strings"
 )
 
-func countLine(line []string) int {
-	// counts all XMAS and SMAX in one line
-	return strings.Count(strings.Join(line, ""), "XMAS") + strings.Count(strings.Join(line, ""), "SAMX")
-}
-
-func countAll(puzzle [][]string) int {
+func count(puzzle [][]string) int {
 	// counts all occurences of XMAS and SMAX in one array
 	total := 0
 	for _, row := range puzzle {
-		total += countLine(row)
+		total += strings.Count(strings.Join(row, ""), "XMAS") + strings.Count(strings.Join(row, ""), "SAMX")
 	}
 	return total
 }
@@ -84,10 +79,10 @@ func day04part1(file *os.File) int {
 		canvas = append(canvas, strings.Split(scanner.Text(), ""))
 	}
 
-	total += countAll(canvas)
-	total += countAll(rot90(canvas))
-	total += countAll(collectDiagDesc(canvas))
-	total += countAll(collectDiagDesc(rot90(canvas)))
+	total += count(canvas)
+	total += count(rot90(canvas))
+	total += count(collectDiagDesc(canvas))
+	total += count(collectDiagDesc(rot90(canvas)))
 
 	return total
 }
