@@ -13,7 +13,7 @@ func count(puzzle [][]string) int {
 	total := 0
 	for _, row := range puzzle {
 		total += strings.Count(strings.Join(row, ""), "XMAS")
-        total += strings.Count(strings.Join(row, ""), "SAMX")
+		total += strings.Count(strings.Join(row, ""), "SAMX")
 	}
 	return total
 }
@@ -70,6 +70,37 @@ func collectDiagDesc(puzzle [][]string) [][]string {
 	return output
 }
 
+func countCross(puzzle [][]string) int {
+    // Counts occurances of the SAM MAS in X shape written forwards and backwards in all variations:
+    //
+    // S M   M M
+    //  A     A
+    // S M   S S
+    //
+    // etc ...
+	total := 0
+	for l, line := range puzzle {
+		for i, item := range line {
+			if (l > 0 && l < len(puzzle)-1) && (i > 0 && i < len(line)-1) {
+				if item == "A" {
+					mas := []string{"M", "A", "S"}
+					sam := []string{"S", "A", "M"}
+					diag1 := []string{puzzle[l-1][i-1], item, puzzle[l+1][i+1]}
+					diag2 := []string{puzzle[l+1][i-1], item, puzzle[l-1][i+1]}
+
+					isDiag1 := slices.Equal(diag1, mas) || slices.Equal(diag1, sam)
+					isDiag2 := slices.Equal(diag2, mas) || slices.Equal(diag2, sam)
+
+					if isDiag1 && isDiag2 {
+						total += 1
+					}
+				}
+			}
+		}
+	}
+	return total
+}
+
 func day04part1(file *os.File) int {
 	scanner := bufio.NewScanner(file)
 	total := 0
@@ -88,38 +119,6 @@ func day04part1(file *os.File) int {
 	return total
 }
 
-
-func countCross(puzzle [][]string) int {
-    total := 0
-    for l, line := range puzzle {
-        for i, item := range line {
-            if (l > 0 && l < len(puzzle) - 1) && (i > 0 && i < len(line) - 1) {
-                if item == "A" {
-                    mas := []string{"M", "A", "S"}
-                    sam := []string{"S", "A", "M"}
-                    diag1 := []string{puzzle[l-1][i-1], item, puzzle[l+1][i+1]}
-                    diag2 := []string{puzzle[l+1][i-1], item, puzzle[l-1][i+1]}
-
-                    isDiag1 := false
-                    isDiag2 := false
-
-                    if diag1[0] == mas[0] && diag1[2] == mas[2] || diag1[0] == sam[0] && diag1[2] == sam[2] {
-                        isDiag1 = true
-                    }
-                    if diag2[0] == mas[0] && diag2[2] == mas[2] || diag2[0] == sam[0] && diag2[2] == sam[2] {
-                        isDiag2 = true
-                    }
-
-                    if isDiag1 && isDiag2 {
-                        total += 1
-                    }
-                }
-            }
-        }
-    }
-    return total
-}
-
 func day04part2(file *os.File) int {
 	scanner := bufio.NewScanner(file)
 	total := 0
@@ -130,10 +129,9 @@ func day04part2(file *os.File) int {
 		canvas = append(canvas, strings.Split(scanner.Text(), ""))
 	}
 
-    total += countCross(canvas)
-	
+	total += countCross(canvas)
 
-    return total
+	return total
 }
 
 func main() {
