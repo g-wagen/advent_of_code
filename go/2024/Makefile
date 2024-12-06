@@ -32,3 +32,20 @@ day04build:
 
 day04run:
 	./build/day-04 day-04-input.txt
+
+day05build:
+	mkdir -p build
+	go build -o build/day-05 day-05.go
+	chmod +x build/day-05
+
+day05run:
+	./build/day-05 day-05-input.txt
+
+day06build:
+	mkdir -p build
+	go build -o build/day-06 day-06.go
+	chmod +x build/day-06
+
+day06run:
+	./build/day-06 day-06-input.txt
+
