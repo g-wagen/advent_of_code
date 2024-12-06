@@ -71,13 +71,13 @@ func collectDiagDesc(puzzle [][]string) [][]string {
 }
 
 func countCross(puzzle [][]string) int {
-    // Counts occurances of the SAM MAS in X shape written forwards and backwards in all variations:
-    //
-    // S M   M M
-    //  A     A
-    // S M   S S
-    //
-    // etc ...
+	// Counts occurances of the SAM MAS in X shape written forwards and backwards in all variations:
+	//
+	// S M   M M
+	//  A     A
+	// S M   S S
+	//
+	// etc ...
 	total := 0
 	for l, line := range puzzle {
 		for i, item := range line {
