@@ -5,8 +5,12 @@ import (
 	"fmt"
 	"os"
 	"slices"
+	"strconv"
 	"strings"
 )
+
+// dirty global variable
+var visited = [][]int{}
 
 func walk(m [][]string, pos []int, dir string) bool {
 	/*
@@ -22,10 +26,10 @@ func walk(m [][]string, pos []int, dir string) bool {
 	   -------
 	   bool
 
-	   And also paints pretty X's at the visited positions :)
+	   And also records all visited positions to a global variable
 	*/
 
-	m[pos[0]][pos[1]] = "X"
+	visited = append(visited, pos)
 
 	nextDir := ""
 	nextPos := []int{0, 0}
@@ -90,13 +94,17 @@ out:
 
 	walk(m, start, "up")
 
-	for _, r := range m {
-		for _, c := range r {
-			if c == "X" {
-				total++
-			}
-		}
+	// store unique positions in this map like:
+	// "12,10":"12,10"
+	// using string keys might be weird but it works
+	uniquePositions := make(map[string]string)
+
+	for _, v := range visited {
+		key := strconv.Itoa(v[0]) + "," + strconv.Itoa(v[1])
+		uniquePositions[key] = key
 	}
+
+	total += len(uniquePositions)
 
 	return total
 }
