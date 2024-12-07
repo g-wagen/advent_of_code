@@ -82,34 +82,33 @@ func day05part2(file *os.File) int {
 		}
 	}
 
+	// for each incorrect update
+	for _, iu := range incorrectUpdates {
+		// count how often a number in the update appears
+		// in front of other numbers of the same update line
+		ranking := make(map[int]int)
+		for _, item := range iu {
+			itemRanking := 0
+			for _, rule := range rules {
+				if rule[0] == item {
+					for _, item2 := range iu {
+						if rule[1] == item2 {
+							itemRanking++
+						}
+					}
+				}
+			}
+			ranking[itemRanking] = item
 
-    // for each incorrect update
-    for _, iu := range incorrectUpdates {
-        // count how often a number in the update appears 
-        // in front of other numbers of the same update line
-        ranking := make(map[int]int)
-        for _, item := range iu {
-            itemRanking := 0
-            for _, rule := range rules {
-                if rule[0] == item {
-                    for _, item2 := range iu {
-                        if rule[1] == item2 {
-                            itemRanking++
-                        }
-                    }
-                }
-            }
-            ranking[itemRanking] = item
-
-        }
-        correct := []int{}
-        for i := len(iu)-1; i > -1; i-- {
-            correct = append(correct, ranking[i])
-        }
+		}
+		correct := []int{}
+		for i := len(iu) - 1; i > -1; i-- {
+			correct = append(correct, ranking[i])
+		}
 		if updateInCorrectOrder(correct, rules) == true {
 			total += correct[(len(correct)-1)/2]
 		}
-    }
+	}
 
 	return total
 }
