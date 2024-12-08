@@ -49,3 +49,11 @@ day06build:
 day06run:
 	./build/day-06 day-06-input.txt
 
+b7:
+	mkdir -p build
+	go build -o build/7 7.go
+	chmod +x build/7
+
+r7:
+	./build/7 7input.txt
+
