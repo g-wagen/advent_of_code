@@ -51,16 +51,54 @@ func d7p1(file *os.File) int {
 	return total
 }
 
+func concatNumbers(num1, num2 int) int {
+	num1Str := strconv.Itoa(num1)
+	num2Str := strconv.Itoa(num2)
+	concat, _ := strconv.Atoi(num1Str + num2Str)
+	return concat
+}
+
 func d7p2(file *os.File) int {
 	scanner := bufio.NewScanner(file)
 	total := 0
 
-	canvas := [][]string{}
+	m := []string{}
 
 	for scanner.Scan() {
-		canvas = append(canvas, strings.Split(scanner.Text(), ""))
+		m = append(m, scanner.Text())
 	}
 
+	for _, item := range m {
+		input := strings.Split(item, ":")
+		target, _ := strconv.Atoi(input[0])
+		numbersLine := strings.Split(strings.TrimSpace(input[1]), " ")
+
+		numbers := make([]int, len(numbersLine))
+		for i, num := range numbersLine {
+			numbers[i], _ = strconv.Atoi(num)
+		}
+
+		result := []int{}
+
+		result = append(result, numbers[0]+numbers[1])
+		result = append(result, numbers[0]*numbers[1])
+		result = append(result, concatNumbers(numbers[0], numbers[1]))
+
+		remaining := numbers[2:]
+
+		for _, num := range remaining {
+			newResult := []int{}
+			for _, o := range result {
+				newResult = append(newResult, o+num)
+				newResult = append(newResult, o*num)
+				newResult = append(newResult, concatNumbers(o, num))
+			}
+			result = newResult
+		}
+		if slices.Contains(result, target) {
+			total += target
+		}
+	}
 	return total
 }
 
