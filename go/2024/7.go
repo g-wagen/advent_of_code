@@ -9,13 +9,6 @@ import (
 	"strings"
 )
 
-func check(slice []int, target int) int {
-	if slices.Contains(slice, target) {
-		return target
-	}
-	return -1
-}
-
 func d7p1(file *os.File) int {
 	scanner := bufio.NewScanner(file)
 	total := 0
@@ -55,40 +48,6 @@ func d7p1(file *os.File) int {
 			total += target
 		}
 	}
-
-	//for i :=0; i < len(numbers)-1; i++ {
-	//    results := []int{}
-	//    num := numbers[i]
-	//    fmt.Println("index", i, num)
-	//
-	//    if i == 1 {
-	//        prev := numbers[i-1]
-	//        add := num + prev
-	//        mult := num * prev
-	//        results = append(results, add)
-	//        results = append(results, mult)
-	//        contains := check(results, target)
-	//        if contains > -1 {
-	//            valid = append(valid, contains)
-	//        }
-	//    }
-
-	//    if i > 1 {
-	//        next := numbers[i+1]
-	//        for _, r := range results {
-	//            results = append(results, r + next)
-	//            results = append(results, r * next)
-	//        }
-	//        contains := check(results, target)
-	//        if contains > -1 {
-	//            valid = append(valid, contains)
-	//        }
-	//        //results = newResults
-	//    }
-	//    fmt.Println(results)
-	//
-	//}
-
 	return total
 }
 
