@@ -41,13 +41,13 @@ day05build:
 day05run:
 	./build/day-05 day-05-input.txt
 
-day06build:
+b6:
 	mkdir -p build
-	go build -o build/day-06 day-06.go
-	chmod +x build/day-06
+	go build -o build/6 6.go
+	chmod +x build/6
 
-day06run:
-	./build/day-06 day-06-input.txt
+r6:
+	./build/6 6input.txt
 
 b7:
 	mkdir -p build
@@ -56,4 +56,13 @@ b7:
 
 r7:
 	./build/7 7input.txt
+
+
+b8:
+	mkdir -p build
+	go build -o build/8 8.go
+	chmod +x build/8
+
+r8:
+	./build/8 8input.txt
 
