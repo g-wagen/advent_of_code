@@ -21,7 +21,7 @@ func permutate(slice [][]int) [][][]int {
 	return out
 }
 
-func readInput(file *os.File) []string{
+func readInput(file *os.File) []string {
 	output := []string{}
 
 	scanner := bufio.NewScanner(file)
@@ -29,54 +29,42 @@ func readInput(file *os.File) []string{
 	for scanner.Scan() {
 		output = append(output, scanner.Text())
 	}
-    return output
+	return output
 }
 
-func d8p1(file *os.File) int {
-	total := 0
-
-	// initiate antenna data structures
+func getAntennasFromInput(input []string) []string {
 	antennas := []string{}
-	antennasPairs := make(map[string][][][]int)
-	antennasPositions := make(map[string][][]int)
-
-	for _, ant := range antennas {
-		antennasPairs[ant] = [][][]int{}
-		antennasPositions[ant] = [][]int{}
-	}
-
-	m := []string{}
-
-	scanner := bufio.NewScanner(file)
-
-	for scanner.Scan() {
-		currentLine := scanner.Text()
-		for _, char := range currentLine {
-			strChar := string(char)
-			if strChar != "." && slices.Contains(antennas, strChar) == false {
-				antennas = append(antennas, strChar)
+	for _, line := range input {
+		for _, char := range line {
+			character := string(char)
+			if character != "." && slices.Contains(antennas, character) == false {
+				antennas = append(antennas, character)
 			}
 		}
-		m = append(m, currentLine)
 	}
+	return antennas
+}
 
-	maxY := len(m) - 1
-	maxX := len(m[0]) - 1
-
+func findAntennaPositions(input []string) map[string][][]int {
 	// find all antenna positions
-	for y, row := range m {
+	positions := make(map[string][][]int)
+	for y, row := range input {
 		for x, col := range row {
 			strCol := string(col)
 			if strCol != "." {
 				position := []int{x, y}
-				antennasPositions[strCol] = append(antennasPositions[strCol], position)
+				positions[strCol] = append(positions[strCol], position)
 			}
 		}
 	}
+	return positions
+}
 
+func findAntennaPairs(positions map[string][][]int) map[string][][][]int {
 	// find all antenna pairs
-	for ant, positions := range antennasPositions {
-		permutations := permutate(positions)
+	antennaPairs := make(map[string][][][]int)
+	for ant, posis := range positions {
+		permutations := permutate(posis)
 		pairs := [][][]int{}
 		for _, pair := range permutations {
 			pos0, pos1 := pair[0], pair[1]
@@ -88,8 +76,31 @@ func d8p1(file *os.File) int {
 			}
 			pairs = append(pairs, pair)
 		}
-		antennasPairs[ant] = pairs
+		antennaPairs[ant] = pairs
 	}
+	return antennaPairs
+}
+
+func addAntinode(coords []int, antinodesMap map[string]int) {
+	antinodesMap[fmt.Sprintf("%v", []int{coords[0], coords[1]})]++
+}
+
+func calculatePositionDiff(pos0, pos1 []int) (int, int) {
+	xDiff := int(math.Abs(float64(pos1[0] - pos0[0])))
+	yDiff := int(math.Abs(float64(pos1[1] - pos0[1])))
+	return xDiff, yDiff
+}
+
+func d8p1(file *os.File) int {
+	total := 0
+
+	input := readInput(file)
+
+	maxY := len(input) - 1
+	maxX := len(input[0]) - 1
+
+	antennasPositions := findAntennaPositions(input)
+	antennasPairs := findAntennaPairs(antennasPositions)
 
 	// find all antinodes
 	antinodes := make(map[string]int)
@@ -101,28 +112,29 @@ func d8p1(file *os.File) int {
 			pos0x, pos0y := pos0[0], pos0[1]
 			pos1x, pos1y := pos1[0], pos1[1]
 
-			xDiff := int(math.Abs(float64(pos1x - pos0x)))
-			yDiff := int(math.Abs(float64(pos1y - pos0y)))
+			xDiff, yDiff := calculatePositionDiff(pos0, pos1)
+
+			anode0y, anode1y := 0, 0
 
 			anode0x := pos0x - xDiff
+			anode0y = pos0y + yDiff
+
 			anode1x := pos1x + xDiff
-			anode0y, anode1y := 0, 0
-			
-            anode0y = pos0y + yDiff
 			anode1y = pos1y - yDiff
-			
-            if pos0y < pos1y {
+
+			if pos0y < pos1y {
 				anode0y = pos0y - yDiff
 				anode1y = pos1y + yDiff
 			}
 
 			if anode0x >= 0 && anode0x <= maxX && anode0y >= 0 && anode0y <= maxY {
 				antinode := []int{anode0x, anode0y}
-				antinodes[fmt.Sprintf("%v", antinode)]++
+				addAntinode(antinode, antinodes)
 			}
+
 			if anode1x >= 0 && anode1x <= maxX && anode1y >= 0 && anode1y <= maxY {
 				antinode := []int{anode1x, anode1y}
-				antinodes[fmt.Sprintf("%v", antinode)]++
+				addAntinode(antinode, antinodes)
 			}
 		}
 	}
@@ -134,61 +146,13 @@ func d8p1(file *os.File) int {
 func d8p2(file *os.File) int {
 	total := 0
 
-	// initiate antenna data structures
-	antennas := []string{}
-	antennasPairs := make(map[string][][][]int)
-	antennasPositions := make(map[string][][]int)
+	input := readInput(file)
 
-	for _, ant := range antennas {
-		antennasPairs[ant] = [][][]int{}
-		antennasPositions[ant] = [][]int{}
-	}
+	maxY := len(input) - 1
+	maxX := len(input[0]) - 1
 
-	m := []string{}
-
-	scanner := bufio.NewScanner(file)
-
-	for scanner.Scan() {
-		currentLine := scanner.Text()
-		for _, char := range currentLine {
-			strChar := string(char)
-			if strChar != "." && slices.Contains(antennas, strChar) == false {
-				antennas = append(antennas, strChar)
-			}
-		}
-		m = append(m, currentLine)
-	}
-
-	maxY := len(m) - 1
-	maxX := len(m[0]) - 1
-
-	// find all antenna positions
-	for y, row := range m {
-		for x, col := range row {
-			strCol := string(col)
-			if strCol != "." {
-				position := []int{x, y}
-				antennasPositions[strCol] = append(antennasPositions[strCol], position)
-			}
-		}
-	}
-
-	// find all antenna pairs
-	for ant, positions := range antennasPositions {
-		permutations := permutate(positions)
-		pairs := [][][]int{}
-		for _, pair := range permutations {
-			pos0, pos1 := pair[0], pair[1]
-			x0, x1 := pos0[0], pos1[0]
-			// flip pair if first coordinate X
-			// is larger than second coordinate X
-			if x0 > x1 {
-				pair = [][]int{pos1, pos0}
-			}
-			pairs = append(pairs, pair)
-		}
-		antennasPairs[ant] = pairs
-	}
+	antennasPositions := findAntennaPositions(input)
+	antennasPairs := findAntennaPairs(antennasPositions)
 
 	// find all antinodes
 	antinodes := make(map[string]int)
@@ -200,8 +164,7 @@ func d8p2(file *os.File) int {
 			pos0x, pos0y := pos0[0], pos0[1]
 			pos1x, pos1y := pos1[0], pos1[1]
 
-			xDiff := int(math.Abs(float64(pos1x - pos0x)))
-			yDiff := int(math.Abs(float64(pos1y - pos0y)))
+			xDiff, yDiff := calculatePositionDiff(pos0, pos1)
 
 			antinodes[fmt.Sprintf("%v", pos0)]++
 			antinodes[fmt.Sprintf("%v", pos1)]++
