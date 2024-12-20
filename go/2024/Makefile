@@ -66,3 +66,10 @@ b8:
 r8:
 	./build/8 8input.txt
 
+b9:
+	mkdir -p build
+	go build -o build/9 9.go
+	chmod +x build/9
+
+r9:
+	./build/9 9input.txt
