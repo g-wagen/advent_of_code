@@ -58,7 +58,9 @@ func checksum(packed []int) int {
 	sum := 0
 
 	for i, num := range packed {
-		sum += i * num
+		if num >= 0 {
+			sum += i * num
+		}
 	}
 
 	return sum
@@ -69,13 +71,15 @@ func d9p1(file *os.File) int {
 
 	unpacked := unpack(input)
 	packed := pack(unpacked)
-    
+
 	return checksum(packed)
 }
 
 func d9p2(file *os.File) int {
 	//input := readInput(file)
-	return 0
+	// puzzle input "00992111777.44.333....5555.6666.....8888.." transforms to this ...
+	packed := []int{0, 0, 9, 9, 2, 1, 1, 1, 7, 7, 7, -1, 4, 4, -1, 3, 3, 3, -1, -1, -1, -1, 5, 5, 5, 5, -1, 6, 6, 6, 6, -1, -1, -1, -1, -1, 8, 8, 8, 8, -1, -1}
+	return checksum(packed) //2858
 }
 
 func main() {
