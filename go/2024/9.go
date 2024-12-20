@@ -69,17 +69,13 @@ func d9p1(file *os.File) int {
 
 	unpacked := unpack(input)
 	packed := pack(unpacked)
-
+    
 	return checksum(packed)
 }
 
 func d9p2(file *os.File) int {
-	checksum := 0
-
 	//input := readInput(file)
-	//fmt.Println(input)
-
-	return checksum
+	return 0
 }
 
 func main() {
