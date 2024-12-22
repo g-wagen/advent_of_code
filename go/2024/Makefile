@@ -1,5 +1,5 @@
 format:
-	gofmt -w *.go
+	gofmt -w */*.go
 
 b1:
 	mkdir -p build
@@ -67,7 +67,7 @@ r8:
 
 b9:
 	mkdir -p build
-	go build -o build/09 09.go
+	go build -o build/09 09/09.go
 	chmod +x build/09
 
 r9:
@@ -75,7 +75,7 @@ r9:
 
 b10:
 	mkdir -p build
-	go build -o build/10 10.go
+	go build -o build/10 10/10.go
 	chmod +x build/10
 
 r10:
@@ -83,7 +83,7 @@ r10:
 
 b11:
 	mkdir -p build
-	go build -o build/11 11.go
+	go build -o build/11 11/11.go
 	chmod +x build/11
 
 r11:
@@ -91,7 +91,7 @@ r11:
 
 b12:
 	mkdir -p build
-	go build -o build/12 12.go
+	go build -o build/12 12/12.go
 	chmod +x build/12
 
 r12:
@@ -99,7 +99,7 @@ r12:
 
 b13:
 	mkdir -p build
-	go build -o build/13 13.go
+	go build -o build/13 13/13.go
 	chmod +x build/13
 
 r13:
@@ -107,7 +107,7 @@ r13:
 
 b14:
 	mkdir -p build
-	go build -o build/14 14.go
+	go build -o build/14 14/14.go
 	chmod +x build/14
 
 r14:
@@ -115,7 +115,7 @@ r14:
 
 b15:
 	mkdir -p build
-	go build -o build/15 15.go
+	go build -o build/15 15/15.go
 	chmod +x build/15
 
 r15:
@@ -123,7 +123,7 @@ r15:
 
 b16:
 	mkdir -p build
-	go build -o build/16 16.go
+	go build -o build/16 16/16.go
 	chmod +x build/16
 
 r16:
@@ -131,7 +131,7 @@ r16:
 
 b17:
 	mkdir -p build
-	go build -o build/17 17.go
+	go build -o build/17 17/17.go
 	chmod +x build/17
 
 r17:
@@ -139,7 +139,7 @@ r17:
 
 b18:
 	mkdir -p build
-	go build -o build/18 18.go
+	go build -o build/18 18/18.go
 	chmod +x build/18
 
 r18:
@@ -147,7 +147,7 @@ r18:
 
 b19:
 	mkdir -p build
-	go build -o build/19 19.go
+	go build -o build/19 19/19.go
 	chmod +x build/19
 
 r19:
@@ -155,7 +155,7 @@ r19:
 
 b20:
 	mkdir -p build
-	go build -o build/20 20.go
+	go build -o build/20 20/20.go
 	chmod +x build/20
 
 r20:
@@ -163,7 +163,7 @@ r20:
 
 b21:
 	mkdir -p build
-	go build -o build/21 21.go
+	go build -o build/21 21/21.go
 	chmod +x build/21
 
 r21:
@@ -171,7 +171,7 @@ r21:
 
 b22:
 	mkdir -p build
-	go build -o build/22 22.go
+	go build -o build/22 22/22.go
 	chmod +x build/22
 
 r22:
@@ -179,7 +179,7 @@ r22:
 
 b23:
 	mkdir -p build
-	go build -o build/23 23.go
+	go build -o build/23 23/23.go
 	chmod +x build/23
 
 r23:
@@ -187,7 +187,7 @@ r23:
 
 b24:
 	mkdir -p build
-	go build -o build/24 24.go
+	go build -o build/24 24/24.go
 	chmod +x build/24
 
 r24:
@@ -195,7 +195,7 @@ r24:
 
 b25:
 	mkdir -p build
-	go build -o build/25 25.go
+	go build -o build/25 25/25.go
 	chmod +x build/25
 
 r25:
