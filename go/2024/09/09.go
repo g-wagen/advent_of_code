@@ -108,7 +108,6 @@ func moveFiles(data []int) []int {
 
 func d9p1(file *os.File) int {
 	input := readInput(file)
-
 	unpacked := unpack(input)
 	moved := moveBlocks(unpacked)
 
