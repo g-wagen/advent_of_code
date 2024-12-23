@@ -26,18 +26,15 @@ func readInput(file *os.File) []int {
 func unpack(diskMap []int) []int {
 	unpacked := []int{}
 
-	fileId := 0
-
+	appendage := 0
 	for i, number := range diskMap {
 		if i%2 == 0 {
-			for j := 0; j != number; j++ {
-				unpacked = append(unpacked, fileId)
-			}
-			fileId++
+			appendage = i / 2
 		} else {
-			for j := 0; j != number; j++ {
-				unpacked = append(unpacked, -1)
-			}
+			appendage = -1
+		}
+		for j := 0; j != number; j++ {
+			unpacked = append(unpacked, appendage)
 		}
 	}
 
@@ -75,32 +72,32 @@ func count(s []int, n int) int {
 	return out
 }
 
+func makeSlice(l int, d int) []int {
+	sl := make([]int, l)
+	for i := 0; i < l; i++ {
+		sl[i] = d
+	}
+	return sl
+}
+
 func moveFiles(data []int) []int {
 	countdown := slices.Max(data)
 
 	for countdown > 0 {
 		need := count(data, countdown)
-		space := make([]int, need)
 
-		for i := range space {
-			space[i] = -1
-		}
-
-		arr := make([]int, need)
-		for i := 0; i < need; i++ {
-			arr[i] = countdown
-		}
+		space := makeSlice(need, -1)
+		numbers := makeSlice(need, countdown)
 
 		index := slices.Index(data, countdown)
 
 		for i := 0; i < len(data); i++ {
-			window := data[i:]
-			have := window[:need]
+			have := data[i : need+i]
 			if slices.Equal(have, space) && index > i {
 				for slices.Index(data, countdown) > -1 {
 					data[slices.Index(data, countdown)] = -1
 				}
-				data = slices.Replace(data, i, i+need, arr...)
+				data = slices.Replace(data, i, i+need, numbers...)
 				break
 			}
 		}
