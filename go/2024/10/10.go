@@ -52,10 +52,10 @@ func toStrCoords(input []int) string {
 }
 
 func hike(data [][]int, trailhead []int) int {
-	/* 
-    hacky way to use string coordinates instead of proper slices.
-	comparing if a slice contains a string is easier than checking for slices within slices.
-    but it's the advent of code... everything is allowed here :-D
+	/*
+	    hacky way to use string coordinates instead of proper slices.
+		comparing if a slice contains a string is easier than checking for slices within slices.
+	    but it's the advent of code... everything is allowed here :-D
 	*/
 	start := toStrCoords(trailhead)
 
@@ -101,6 +101,56 @@ func hike(data [][]int, trailhead []int) int {
 
 }
 
+func hike2(data [][]int, trailhead []int) int {
+	/*
+	    hacky way to use string coordinates instead of proper slices.
+		comparing if a slice contains a string is easier than checking for slices within slices.
+	    but it's the advent of code... everything is allowed here :-D
+	*/
+	start := toStrCoords(trailhead)
+
+	queue := []string{start}
+
+	nines := []string{}
+
+	for len(queue) > 0 {
+		current := queue[0]
+		queue = queue[1:]
+
+		currentPos := toIntCoords(current)
+
+		elevation := data[currentPos[0]][currentPos[1]]
+		nextElevation := elevation + 1
+
+		cy, cx := currentPos[0], currentPos[1]
+
+		// add coordinate of 9 elevation
+		if elevation == 9 {
+			nines = append(nines, current)
+		}
+
+		// up
+		if cy-1 >= 0 && data[cy-1][cx] == nextElevation {
+			queue = append(queue, fmt.Sprintf("%d,%d", cy-1, cx))
+		}
+		// down
+		if cy+1 < len(data) && data[cy+1][cx] == nextElevation {
+			queue = append(queue, fmt.Sprintf("%d,%d", cy+1, cx))
+		}
+		// left
+		if cx-1 >= 0 && data[cy][cx-1] == nextElevation {
+			queue = append(queue, fmt.Sprintf("%d,%d", cy, cx-1))
+		}
+		// right
+		if cx+1 < len(data[0]) && data[cy][cx+1] == nextElevation {
+			queue = append(queue, fmt.Sprintf("%d,%d", cy, cx+1))
+		}
+	}
+
+	return len(nines)
+
+}
+
 func d10p1(file *os.File) int {
 	input := to2dIntSlice(file)
 	score := 0
@@ -114,8 +164,15 @@ func d10p1(file *os.File) int {
 }
 
 func d10p2(file *os.File) int {
-	//input := to2dIntSlice(file)
-	return 2
+	input := to2dIntSlice(file)
+	rating := 0
+
+	trailheads := findTrailheads(input)
+	for _, s := range trailheads {
+		rating += hike2(input, s)
+	}
+
+	return rating
 }
 
 func main() {
