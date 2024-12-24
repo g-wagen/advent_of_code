@@ -4,90 +4,125 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	_ "slices"
+	"slices"
 	"strconv"
+	"strings"
 )
 
-func readInput(file *os.File) [][]int {
+func to2dIntSlice(file *os.File) [][]int {
 	output := [][]int{}
 
 	scanner := bufio.NewScanner(file)
 
 	for scanner.Scan() {
 		text := scanner.Text()
-        line := []int{}
+		line := []int{}
 		for _, char := range text {
 			number, _ := strconv.Atoi(string(char))
 			line = append(line, number)
 		}
-        output = append(output, line)
+		output = append(output, line)
 	}
 	return output
 }
 
-func startsEnds (data [][]int) ([][]int, [][]int) {
-
-    starts := [][]int{}
-    ends := [][]int{}
-
-    start := 0
-    end := 9
-
-    for y, d := range data {
-        for x, c := range d {
-            coord := []int{y, x}
-            if c == start {
-                starts = append(starts, coord)
-            }
-            if c == end {
-                ends = append(ends, coord)
-            }
-        }
-    }
-    return starts, ends
+func findTrailheads(data [][]int) [][]int {
+	trailheads := [][]int{}
+	for y, d := range data {
+		for x, c := range d {
+			if c == 0 {
+				trailheads = append(trailheads, []int{y, x})
+			}
+		}
+	}
+	return trailheads
 }
 
-func hike (data [][]int, s []int, e [][]int) int {
-    /*
-    recursive?
-    walk uphill (current value + 1).
-    remember if path can split.
-    stop current branch if path goes downhill (current value - 1).
-    stop if end was reached.
-    only count unique end positions.
-    increment score if new 9 can be reached from start point.
-    */
+func toIntCoords(input string) []int {
+	// converts string coordinates "2,5" to [2, 5] integer slice
+	y, x, _ := strings.Cut(input, ",")
+	yint, _ := strconv.Atoi(y)
+	xint, _ := strconv.Atoi(x)
+	return []int{yint, xint}
+}
+
+func toStrCoords(input []int) string {
+	// converts integer slice coordinates [2, 5] to "2,5" string
+	return fmt.Sprintf("%d,%d", input[0], input[1])
+}
+
+func hike(data [][]int, trailhead []int) int {
+	/* 
+    hacky way to use string coordinates instead of proper slices.
+	comparing if a slice contains a string is easier than checking for slices within slices.
+    but it's the advent of code... everything is allowed here :-D
+	*/
+	start := toStrCoords(trailhead)
+
+	queue := []string{start}
+
+	nines := []string{}
+
+	for len(queue) > 0 {
+		current := queue[0]
+		queue = queue[1:]
+
+		currentPos := toIntCoords(current)
+
+		elevation := data[currentPos[0]][currentPos[1]]
+		nextElevation := elevation + 1
+
+		cy, cx := currentPos[0], currentPos[1]
+
+		// add coordinate of 9 elevation
+		if elevation == 9 && slices.Contains(nines, current) == false {
+			nines = append(nines, current)
+		}
+
+		// up
+		if cy-1 >= 0 && data[cy-1][cx] == nextElevation {
+			queue = append(queue, fmt.Sprintf("%d,%d", cy-1, cx))
+		}
+		// down
+		if cy+1 < len(data) && data[cy+1][cx] == nextElevation {
+			queue = append(queue, fmt.Sprintf("%d,%d", cy+1, cx))
+		}
+		// left
+		if cx-1 >= 0 && data[cy][cx-1] == nextElevation {
+			queue = append(queue, fmt.Sprintf("%d,%d", cy, cx-1))
+		}
+		// right
+		if cx+1 < len(data[0]) && data[cy][cx+1] == nextElevation {
+			queue = append(queue, fmt.Sprintf("%d,%d", cy, cx+1))
+		}
+	}
+
+	return len(nines)
+
 }
 
 func d10p1(file *os.File) int {
-	input := readInput(file)
-    total := 0
-    starts, ends := startsEnds(input)
-    for _, s := range starts {
-        total += hike(input, s, ends)
+	input := to2dIntSlice(file)
+	score := 0
 
-	return total
+	trailheads := findTrailheads(input)
+	for _, s := range trailheads {
+		score += hike(input, s)
+	}
+
+	return score
 }
 
 func d10p2(file *os.File) int {
-	//input := readInput(file)
-
+	//input := to2dIntSlice(file)
 	return 2
 }
 
 func main() {
-	file, error := os.Open(os.Args[1])
-
-	if error != nil {
-		fmt.Println(error)
-		return
-	}
-
+	file, _ := os.Open(os.Args[1])
 	defer file.Close()
 
 	fmt.Println("Solution Day 10 Part 1:", d10p1(file))
-
 	file.Seek(0, 0)
-
 	fmt.Println("Solution Day 10 Part 2:", d10p2(file))
 }
