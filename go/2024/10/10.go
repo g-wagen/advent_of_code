@@ -53,9 +53,9 @@ func toStrCoords(input []int) string {
 
 func hike(data [][]int, trailhead []int) int {
 	/*
-	    hacky way to use string coordinates instead of proper slices.
-		comparing if a slice contains a string is easier than checking for slices within slices.
-	    but it's the advent of code... everything is allowed here :-D
+		    hacky way to use string coordinates instead of proper slices.
+			comparing if a slice contains a string is easier than checking for slices within slices.
+		    but it's the advent of code... everything is allowed here :-D
 	*/
 	start := toStrCoords(trailhead)
 
@@ -103,9 +103,9 @@ func hike(data [][]int, trailhead []int) int {
 
 func hike2(data [][]int, trailhead []int) int {
 	/*
-	    hacky way to use string coordinates instead of proper slices.
-		comparing if a slice contains a string is easier than checking for slices within slices.
-	    but it's the advent of code... everything is allowed here :-D
+		    hacky way to use string coordinates instead of proper slices.
+			comparing if a slice contains a string is easier than checking for slices within slices.
+		    but it's the advent of code... everything is allowed here :-D
 	*/
 	start := toStrCoords(trailhead)
 
