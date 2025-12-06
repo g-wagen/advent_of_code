@@ -17,14 +17,15 @@ dependencies = [
 ]
 
 requires-python = ">=3.9, <3.10"
-license = {text = "MyLicense"}
+license = { text = "MyLicense" }
 
 [tool]
 [tool.pdm]
 
 
 [tool.pdm.scripts]
-black = "black ."
+lint = "ruff check --select I --fix"
+format = { composite = ["lint", "ruff format ."] }
 
 
 [tool.ruff]
