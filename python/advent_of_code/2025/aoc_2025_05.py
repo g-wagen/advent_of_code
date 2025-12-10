@@ -6,9 +6,6 @@ day = 5
 puzzle_input = read_puzzle_input(input_path="aoc_2025_05_input.txt")
 
 
-# puzzle_input = read_puzzle_input(input_path="aoc_2025_05_input_sample.txt")
-
-
 def d5p1() -> int:
     ingredient_ids = set()
     fresh_ingredient_ranges: list[range] = []
@@ -29,20 +26,47 @@ def d5p1() -> int:
     return len(fresh_ingredients)
 
 
-def d5p2() -> int:
-    ingredient_ids = set()
-    fresh_ingredient_ranges: dict[range, int] = {}
-    fresh_ingredients = set()
+def overlapping(range1, range2) -> bool:
+    max_start = max(range1[0], range2[0])
+    min_end = min(range1[1], range2[1])
 
-    for l, line in enumerate(puzzle_input):
+    return max_start <= min_end + 1
+
+
+def combine_range(range1, range2) -> list[int]:
+    return [min(range1[0], range2[0]), max(range1[1], range2[1])]
+
+
+def d5p2() -> int:
+    solution = 0
+
+    ingredient_ranges = []
+    for line in puzzle_input:
         if "-" in line:
             start, end = line.split("-")
-            fresh_range = range(int(start), int(end) + 1, 1)
-            fresh_ingredient_ranges[fresh_range] = len(fresh_range)
+            ingredient_ranges.append([int(start), int(end)])
 
-    # print(fresh_ingredient_ranges)
+    ingredient_ranges = sorted(ingredient_ranges, key=lambda x: x[0])
 
-    return 123
+    merged = True
+
+    while merged:
+        merged = False
+        for i, r in enumerate(ingredient_ranges):
+            try:
+                if overlapping(r, ingredient_ranges[i + 1]):
+                    merged = True
+                    new_range = combine_range(r, ingredient_ranges[i + 1])
+                    ingredient_ranges[i] = new_range
+                    del ingredient_ranges[i + 1]
+                    break
+            except IndexError:
+                pass
+
+    for id in ingredient_ranges:
+        solution += (id[1] + 1) - id[0]
+
+    return solution
 
 
 print_solution(solution=d5p1(), y=year, d=day, part=1)
