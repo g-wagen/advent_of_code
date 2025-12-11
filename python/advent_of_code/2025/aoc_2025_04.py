@@ -43,9 +43,7 @@ def d4p2() -> int:
 
     grid = pad_grid(puzzle_input)
 
-    rolls_accessible = True
-
-    while rolls_accessible:
+    while True:
         access_counts = []
         for y, row in enumerate(grid):
             for x, item in enumerate(row):
@@ -61,7 +59,7 @@ def d4p2() -> int:
                     access_counts.append(rolls_nearby)
 
         if min(access_counts) > 3:
-            rolls_accessible = False
+            break
 
     return solution
 
