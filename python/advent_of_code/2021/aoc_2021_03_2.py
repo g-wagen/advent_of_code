@@ -1,5 +1,6 @@
-from advent_of_code import helper
 import pandas as pd
+
+from advent_of_code import helper
 
 data = [
     "00100",

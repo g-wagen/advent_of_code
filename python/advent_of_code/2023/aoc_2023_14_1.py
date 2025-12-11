@@ -45,6 +45,7 @@ while True:
     if all(stop_moving):
         break
 
+
 def calculate_load(ground: list) -> int:
     load = 0
     for y in range(len(ground)):

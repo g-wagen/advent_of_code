@@ -1,6 +1,7 @@
-from advent_of_code import helper
 import numpy as np
 from scipy import ndimage
+
+from advent_of_code import helper
 
 data = [
     "2199943210",

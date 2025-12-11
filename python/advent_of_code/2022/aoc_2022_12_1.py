@@ -1,5 +1,6 @@
-from advent_of_code.helper import choose_puzzle_input, print_solution
 from string import ascii_lowercase
+
+from advent_of_code.helper import choose_puzzle_input, print_solution
 
 year = 2022
 day = 12

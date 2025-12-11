@@ -1,6 +1,7 @@
-from advent_of_code import helper
 import matplotlib.pyplot as plt
 import numpy as np
+
+from advent_of_code import helper
 
 
 def plotting(x1, x2, y1, y2, size_x, size_y):
@@ -34,10 +35,12 @@ data = [
 data = helper.get_puzzle_input(d=5, y=2021)
 
 data = [x.replace(" -> ", ",") for x in data]
-data = np.array([int(x) for x in ",".join(data).split(",")]).reshape((
-    len(data),
-    4,
-))
+data = np.array([int(x) for x in ",".join(data).split(",")]).reshape(
+    (
+        len(data),
+        4,
+    )
+)
 
 x1, x2 = data[:, 0], data[:, 2]
 y1, y2 = data[:, 1], data[:, 3]

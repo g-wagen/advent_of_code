@@ -1,5 +1,6 @@
-from advent_of_code import helper
 import numpy as np
+
+from advent_of_code import helper
 
 data = [
     "be cfbegad cbdgef fgaecd cgeb fdcge agebfd fecdb fabcd edb | fdgacbe cefdb cefbgd gcbe",

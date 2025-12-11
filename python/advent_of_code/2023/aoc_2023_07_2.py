@@ -323,10 +323,12 @@ for line in puzzle_input:
     j_adjust = adjust_cards_counter_for_j2(hand, cards_counter)
     new_rank = rank(j_adjust)
 
-    cards_and_values_and_such.append({
-        "strength": f"{new_rank}{relative_hand_strength(hand)}",
-        "bid": int(bid),
-    })
+    cards_and_values_and_such.append(
+        {
+            "strength": f"{new_rank}{relative_hand_strength(hand)}",
+            "bid": int(bid),
+        }
+    )
 
 total_winnings = 0
 

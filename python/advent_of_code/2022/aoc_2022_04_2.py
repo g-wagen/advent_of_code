@@ -1,4 +1,5 @@
-from aoc_2022_04_1 import puzzle_input, get_assignment
+from aoc_2022_04_1 import get_assignment, puzzle_input
+
 from advent_of_code.helper import print_solution
 
 

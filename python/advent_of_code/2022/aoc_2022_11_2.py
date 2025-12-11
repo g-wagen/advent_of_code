@@ -1,5 +1,6 @@
-from advent_of_code.helper import choose_puzzle_input, print_solution
 import numpy as np
+
+from advent_of_code.helper import choose_puzzle_input, print_solution
 
 puzzle_input = choose_puzzle_input(
     y=2022,
@@ -102,9 +103,9 @@ for (monkey, attrs), (monkey_obj, monkey_obj_attr) in zip(
 
 rounds = 10000
 for i in range(rounds):
-    worry_factor = np.prod([
-        monkey.test_value for k, monkey in monkey_objects.items()
-    ])
+    worry_factor = np.prod(
+        [monkey.test_value for k, monkey in monkey_objects.items()]
+    )
     # print(f"{i} of {rounds}")
 
     for j, m in monkey_objects.items():

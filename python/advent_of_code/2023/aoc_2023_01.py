@@ -1,5 +1,6 @@
-import sys
 import os
+import sys
+
 from advent_of_code.helper import choose_puzzle_input, print_solution
 
 puzzle_input = choose_puzzle_input(

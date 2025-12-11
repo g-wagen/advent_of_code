@@ -1,5 +1,6 @@
-from advent_of_code.helper import choose_puzzle_input, print_solution
 import re
+
+from advent_of_code.helper import choose_puzzle_input, print_solution
 
 year = 2023
 day = 8

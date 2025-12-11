@@ -1,5 +1,6 @@
-from advent_of_code.helper import get_puzzle_input, print_solution
 import numpy as np
+
+from advent_of_code.helper import get_puzzle_input, print_solution
 
 puzzle_input = get_puzzle_input(y=2022, d=8)
 

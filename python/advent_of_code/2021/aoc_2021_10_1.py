@@ -35,7 +35,7 @@ for item in data:
             else:
                 expected = closing.find(stack[-1])
                 print(
-                    f'{"".join(stack)} : Expected {closing[expected + 1]}, but found {c} instead!'
+                    f"{''.join(stack)} : Expected {closing[expected + 1]}, but found {c} instead!"
                 )
                 score.append(points[c])
                 stop = True

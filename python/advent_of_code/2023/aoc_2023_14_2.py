@@ -1,7 +1,7 @@
 import numpy as np
 from tqdm import tqdm
-from advent_of_code.helper import choose_puzzle_input, print_solution
 
+from advent_of_code.helper import choose_puzzle_input, print_solution
 
 year = 2023
 day = 14

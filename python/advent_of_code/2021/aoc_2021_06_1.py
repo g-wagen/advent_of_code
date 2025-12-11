@@ -1,5 +1,6 @@
-from advent_of_code import helper
 import numpy as np
+
+from advent_of_code import helper
 
 data = ["3,4,3,1,2"]
 data = helper.get_puzzle_input(d=6, y=2021)

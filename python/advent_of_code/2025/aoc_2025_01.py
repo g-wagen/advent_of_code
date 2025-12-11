@@ -1,4 +1,8 @@
-from advent_of_code.helper import choose_puzzle_input, print_solution, read_puzzle_input
+from advent_of_code.helper import (
+    choose_puzzle_input,
+    print_solution,
+    read_puzzle_input,
+)
 
 year = 2025
 day = 1
@@ -10,8 +14,10 @@ max_value = 99
 
 ze_array = [x for x in range(100)]
 
+
 def interpret_value(value: str) -> int:
     return int(value[1:]) if value[0] == "R" else -int(value[1:])
+
 
 def d1p1() -> int:
     position = 50

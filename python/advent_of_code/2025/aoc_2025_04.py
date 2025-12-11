@@ -17,8 +17,16 @@ def pad_grid(grid: list[str]) -> list[list[str]]:
 
 
 def get_neighbors(grid, row, x, y) -> list[str]:
-    return [row[x - 1], row[x + 1], grid[y - 1][x], grid[y + 1][x], grid[y - 1][x - 1], grid[y - 1][x + 1],
-            grid[y + 1][x - 1], grid[y + 1][x + 1]]
+    return [
+        row[x - 1],
+        row[x + 1],
+        grid[y - 1][x],
+        grid[y + 1][x],
+        grid[y - 1][x - 1],
+        grid[y - 1][x + 1],
+        grid[y + 1][x - 1],
+        grid[y + 1][x + 1],
+    ]
 
 
 def d4p1() -> int:

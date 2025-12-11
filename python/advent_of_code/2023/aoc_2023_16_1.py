@@ -1,6 +1,8 @@
-from advent_of_code.helper import choose_puzzle_input, print_solution
-import numpy as np
 import sys
+
+import numpy as np
+
+from advent_of_code.helper import choose_puzzle_input, print_solution
 
 sys.setrecursionlimit(10**4)
 
@@ -154,6 +156,7 @@ def recursive_move(
             step=step + 1,
             max_steps=max_steps - 1,
         )
+
 
 recursive_move(terrain=data, y=0, x=0, heading="east", step=0, max_steps=1000)
 # print(alternative_paths)

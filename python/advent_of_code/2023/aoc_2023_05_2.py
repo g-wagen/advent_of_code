@@ -1,6 +1,6 @@
 from typing import Iterable
-from advent_of_code.helper import choose_puzzle_input, print_solution
 
+from advent_of_code.helper import choose_puzzle_input, print_solution
 
 year = 2023
 day = 5
@@ -73,7 +73,7 @@ for r, rng in enumerate(seed_chunks):
     for j, batch in enumerate(chunk(whole_range, batchsize)):
         current = (j + 1) * batchsize
         print(
-            f"Seed batch {r+1} - {current}/{num_items} - {(current / num_items) * 100} %"
+            f"Seed batch {r + 1} - {current}/{num_items} - {(current / num_items) * 100} %"
         )
         locations.append(get_min_location(batch))
 

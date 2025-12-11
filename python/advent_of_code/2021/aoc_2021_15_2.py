@@ -1,8 +1,8 @@
-from advent_of_code import helper
 import numpy as np
 from pathfinding.core.grid import Grid
 from pathfinding.finder.dijkstra import DijkstraFinder
 
+from advent_of_code import helper
 
 # GET THE DATA
 data = [

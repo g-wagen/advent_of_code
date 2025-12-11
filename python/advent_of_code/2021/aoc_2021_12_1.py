@@ -1,5 +1,6 @@
-from advent_of_code.helper import get_puzzle_input
 from random import choice
+
+from advent_of_code.helper import get_puzzle_input
 
 puzzle_input = get_puzzle_input(y=2021, d=12)
 with open("aoc_2021_12_testinput.txt", "r") as f:

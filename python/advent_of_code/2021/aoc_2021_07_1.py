@@ -1,5 +1,6 @@
-from advent_of_code import helper
 import numpy as np
+
+from advent_of_code import helper
 
 
 def get_distance(a, b):
@@ -22,4 +23,4 @@ while position < len(data):
 min_fuel = min(consumed_fuel)
 best_position = consumed_fuel.index(min_fuel)
 
-print(f"Horizontal position: {best_position}\n" f"Fuel consumption: {min_fuel}")
+print(f"Horizontal position: {best_position}\nFuel consumption: {min_fuel}")

@@ -93,13 +93,15 @@ def calculate_reached_garden_plots(steps: int, storage: Storage) -> int:
     for i in range(steps):
         last_values = storage.read()
         storage.clear()
-        storage.write([
-            result
-            for v in last_values
-            for result in walk_everywhere(
-                terrain=storage.terrain, y=v[0], x=v[1]
-            )
-        ])
+        storage.write(
+            [
+                result
+                for v in last_values
+                for result in walk_everywhere(
+                    terrain=storage.terrain, y=v[0], x=v[1]
+                )
+            ]
+        )
 
     reached_plots = len(last_values)
     return reached_plots
@@ -108,6 +110,6 @@ def calculate_reached_garden_plots(steps: int, storage: Storage) -> int:
 my_storage = Storage(terrain=the_map)
 start = perf_counter()
 print(calculate_reached_garden_plots(steps=500, storage=my_storage))
-print(f"Execution time: {perf_counter()-start} seconds")
+print(f"Execution time: {perf_counter() - start} seconds")
 # print_solution(solution=reached_plots, y=year, d=day, part=2)
 # print(f"Execution time: {end} seconds")

@@ -1,17 +1,19 @@
-from advent_of_code.helper import get_puzzle_input, print_solution
-import numpy as np
 from string import ascii_lowercase
+
+import numpy as np
 from pathfinding.core.grid import Grid
 from pathfinding.finder.dijkstra import DijkstraFinder
+
+from advent_of_code.helper import get_puzzle_input, print_solution
 
 puzzle_input = get_puzzle_input(y=2022, d=12)
 with open("aoc_2022_12_inputsample.txt", "r") as f:
     puzzle_input = f.read().splitlines()
 
 lowercase = {"S": 0}
-lowercase.update({
-    l: i + 1 for l, i in zip(ascii_lowercase, range(len(ascii_lowercase)))
-})
+lowercase.update(
+    {l: i + 1 for l, i in zip(ascii_lowercase, range(len(ascii_lowercase)))}
+)
 lowercase.update({"E": len(ascii_lowercase) + 1})
 
 axis_0 = len(puzzle_input)

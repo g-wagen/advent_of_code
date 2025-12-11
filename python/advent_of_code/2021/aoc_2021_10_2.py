@@ -1,5 +1,6 @@
-from advent_of_code import helper
 import numpy as np
+
+from advent_of_code import helper
 
 data = [
     "[({(<(())[]>[[{[]{<()<>>",
@@ -83,4 +84,4 @@ for item in data:
     score.append(tmp_score)
 
 # print(score)
-print(f'Puzzle answer: {np.median(score).astype("int")}')
+print(f"Puzzle answer: {np.median(score).astype('int')}")

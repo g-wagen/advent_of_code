@@ -1,9 +1,9 @@
+import datetime
+from pathlib import Path
 from typing import Any
 
-import requests
-import datetime
 import dotenv
-from pathlib import Path
+import requests
 
 
 def read_puzzle_input(input_path: str) -> list[str]:
@@ -35,13 +35,17 @@ def get_puzzle_input(y: int = None, d: int = None) -> list[str]:
         day = d
         year = y
 
-    puzzle_input_file = str(Path(__package__) / str(year) / f"aoc_{year}_{day:02d}_input.txt")
+    puzzle_input_file = str(
+        Path(__package__) / str(year) / f"aoc_{year}_{day:02d}_input.txt"
+    )
 
     # Let's go easy on the webserver hosting the Advent of Code event and
     # download the puzzle input to a local file in case it doesn't exist yet
     if not Path(puzzle_input_file).exists():
         dotenv.load_dotenv()
-        COOKIE = dotenv.get_key(str(Path(__package__).parent / ".env"), "AOC_SESSION_COOKIE")
+        COOKIE = dotenv.get_key(
+            str(Path(__package__).parent / ".env"), "AOC_SESSION_COOKIE"
+        )
 
         session = requests.Session()
         download_todays_input = session.get(

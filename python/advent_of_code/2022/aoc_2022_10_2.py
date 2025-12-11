@@ -1,6 +1,8 @@
-from advent_of_code.helper import get_puzzle_input, print_solution
-import numpy as np
 import sys
+
+import numpy as np
+
+from advent_of_code.helper import get_puzzle_input, print_solution
 
 np.set_printoptions(threshold=sys.maxsize)
 

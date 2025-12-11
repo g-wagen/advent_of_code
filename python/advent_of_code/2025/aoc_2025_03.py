@@ -13,7 +13,7 @@ def d3p1() -> int:
         joltages = set()
 
         for b, first_battery in enumerate(bank):
-            for bb, second_battery in enumerate(bank[b + 1:]):
+            for bb, second_battery in enumerate(bank[b + 1 :]):
                 joltages.add(int(f"{first_battery}{second_battery}"))
 
         solution += max(joltages)

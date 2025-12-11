@@ -2,7 +2,6 @@ import numpy as np
 from pathfinding.core.grid import Grid
 from pathfinding.finder.dijkstra import DijkstraFinder
 
-
 data = [
     "1163751742",
     "1381373672",

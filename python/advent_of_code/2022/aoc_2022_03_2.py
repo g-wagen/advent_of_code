@@ -1,4 +1,5 @@
 from string import ascii_lowercase, ascii_uppercase
+
 from advent_of_code.helper import get_puzzle_input, make_chunks
 
 puzzle_input = get_puzzle_input(y=2022, d=3)
