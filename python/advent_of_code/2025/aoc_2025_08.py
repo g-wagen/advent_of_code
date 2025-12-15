@@ -45,9 +45,11 @@ def d8p1() -> int:
     connection_limit = 1000
     counter = 0
 
-    circuits = [list(distances.keys())[0]]
+    circuits = []
+    circuits.append(list(distances.keys())[0])
 
     for pair in distances.keys():
+        pair = list(pair)
         if counter > connection_limit:
             break
         a, b = pair[0], pair[1]
@@ -56,20 +58,17 @@ def d8p1() -> int:
 
         for g, group in enumerate(circuits):
             if a in group or b in group:
-                circuits[g] = list(set(list(group) + list(pair)))
+                circuits[g] = list(set(list(group) + pair))
                 merged = True
                 break
 
         if not merged:
-            circuits.append(list(pair))
+            circuits.append(pair)
 
         counter += 1
 
-    print(circuits)
-
-    for i in circuits[:3]:
-        print(i)
-        solution *= len(i)
+    for c in circuits[:3]:
+        solution *= len(c)
 
     return solution
 
