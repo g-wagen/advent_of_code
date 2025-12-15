@@ -78,6 +78,6 @@ def d8p2() -> int:
     return solution
 
 
-print_solution(solution=d8p1(), y=year, d=day, part=1)
+print_solution(solution=d8p1, y=year, d=day, part=1)
 
-print_solution(solution=d8p2(), y=year, d=day, part=2)
+print_solution(solution=d8p2, y=year, d=day, part=2)

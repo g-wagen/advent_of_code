@@ -69,6 +69,6 @@ def d5p2() -> int:
     return solution
 
 
-print_solution(solution=d5p1(), y=year, d=day, part=1)
+print_solution(solution=d5p1, y=year, d=day, part=1)
 
-print_solution(solution=d5p2(), y=year, d=day, part=2)
+print_solution(solution=d5p2, y=year, d=day, part=2)

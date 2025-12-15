@@ -1,6 +1,7 @@
 import datetime
 from pathlib import Path
-from typing import Any
+from time import perf_counter
+from typing import Callable
 
 import dotenv
 import requests
@@ -78,5 +79,8 @@ def make_chunks(chunk_size: int, iterable: list) -> list:
     return chunks
 
 
-def print_solution(solution: Any, y: int, d: int, part: int) -> None:
-    print(f"{d:02d}.12.{y} {part}: {solution}")
+# TODO: Fix all other puzzles that use this function
+def print_solution(solution: Callable, y: int, d: int, part: int) -> None:
+    now = perf_counter()
+    solution_calculation = solution()
+    print(f"{d:02d}.12.{y} {part}: {solution_calculation} - {perf_counter() - now:.3f} seconds")
