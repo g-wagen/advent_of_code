@@ -24,15 +24,13 @@ def calculate_3d_distance(point1, point2) -> float:
 
 
 def d8p1() -> int:
-    solution = 0
+    solution = 1
     distances = {}
     points = {}
-    circuits = []
-    all_junction_boxes = set()
+
 
     for c, coord in enumerate(puzzle_input):
         points[tuple(coord)] = c
-        all_junction_boxes.add(c)
 
     for i, coord1 in enumerate(puzzle_input):
         for j, coord2 in enumerate(puzzle_input):
@@ -44,45 +42,34 @@ def d8p1() -> int:
 
     distances = dict(sorted(distances.items(), key=lambda item: item[1]))
 
-    connection_limit = 10
+    connection_limit = 1000
     counter = 0
 
-    connections_id = 0
+    circuits = [list(distances.keys())[0]]
 
-    for p in distances.keys():
-        append_this = set()
-        p_set = set(p)
-        if counter >= connection_limit:
+    for pair in distances.keys():
+        if counter > connection_limit:
             break
+        a, b = pair[0], pair[1]
 
-        if len(circuits) == 0:
-            circuits.append(p_set)
-            continue
+        merged = False
 
-        for i, circ in enumerate(circuits):
-            # try:
-            does_intersect = circ & p_set
-            if does_intersect:
-                del circuits[i]
-                circuits.append(p_set.union(circ))
-                continue
-            else:
-                append_this.add(p_set)
-            # except TypeError:
-            #     pass
-        if len(append_this) > 0:
-            circuits.append(append_this)
+        for g, group in enumerate(circuits):
+            if a in group or b in group:
+                circuits[g] = list(set(list(group) + list(pair)))
+                merged = True
+                break
 
-
-
-
-
+        if not merged:
+            circuits.append(list(pair))
 
         counter += 1
 
-    print(distances)
     print(circuits)
-    print(all_junction_boxes)
+
+    for i in circuits[:3]:
+        print(i)
+        solution *= len(i)
 
     return solution
 
