@@ -24,15 +24,17 @@ def assignment_contains_other(first: set, second: set) -> bool:
     return first.issubset(second) or second.issubset(first)
 
 
-redundant = 0
+def d4p1():
+    redundant = 0
 
-for item in puzzle_input:
-    assignments = get_assignment(item)
-    redundant += (
-        1
-        if assignment_contains_other(assignments.elf1, assignments.elf2)
-        else 0
-    )
+    for item in puzzle_input:
+        assignments = get_assignment(item)
+        redundant += (
+            1
+            if assignment_contains_other(assignments.elf1, assignments.elf2)
+            else 0
+        )
+    return redundant
 
-if __name__ == "__main__":
-    print_solution(redundant, 2022, 4, 1)
+
+print_solution(d4p1, 2022, 4, 1)

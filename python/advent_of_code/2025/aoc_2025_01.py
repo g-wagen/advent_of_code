@@ -7,7 +7,7 @@ from advent_of_code.helper import (
 year = 2025
 day = 1
 
-puzzle_input = read_puzzle_input(input_path="aoc_2025_09_input.txt")
+puzzle_input = read_puzzle_input(input_path="aoc_2025_01_input.txt")
 
 min_value = 0
 max_value = 99

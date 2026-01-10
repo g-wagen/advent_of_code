@@ -1,15 +1,11 @@
 from typing import Callable
 
-from advent_of_code.helper import choose_puzzle_input, print_solution
+from advent_of_code.helper import read_puzzle_input, print_solution
 
 year = 2023
 day = 9
 
-puzzle_input = choose_puzzle_input(
-    y=year,
-    d=day,
-    # sample_input_path=f"aoc_{year}_{day:02d}_input_sample.txt",
-)
+puzzle_input = read_puzzle_input(input_path=f"aoc_{year}_{day:02d}_input.txt")
 
 
 def diff_line(sequence: list[int]) -> list[int]:
@@ -33,7 +29,7 @@ def next_in_series(
     out_sequence = numbers
     while True:
         if not temp_sequence:
-            temp_sequence.append(step_diff_func(number_sequence))
+            temp_sequence.append(step_diff_func(out_sequence))
         elif same_steps_func(temp_sequence[-1]):
             end = numbers[-1]
             for sequence in temp_sequence:
@@ -44,34 +40,41 @@ def next_in_series(
             temp_sequence.append(step_diff_func(temp_sequence[-1]))
     return out_sequence
 
+def y2023d9p1():
+    next_value = []
+    for line in puzzle_input:
+        sequences = []
+        number_sequence = [int(x) for x in line.split()]
 
-next_value = []
-for line in puzzle_input:
-    sequences = []
-    number_sequence = [int(x) for x in line.split()]
+        next_value.append(
+            next_in_series(
+                numbers=number_sequence,
+                step_diff_func=diff_line,
+                same_steps_func=same_diff,
+            )[-1]
+        )
 
-    next_value.append(
-        next_in_series(
-            numbers=number_sequence,
-            step_diff_func=diff_line,
-            same_steps_func=same_diff,
-        )[-1]
-    )
-
-print_solution(solution=sum(next_value), y=year, d=day, part=1)
+    return sum(next_value)
 
 
-next_value = []
-for line in puzzle_input:
-    sequences = []
-    number_sequence = [int(x) for x in line.split()][::-1]
 
-    next_value.append(
-        next_in_series(
-            numbers=number_sequence,
-            step_diff_func=diff_line,
-            same_steps_func=same_diff,
-        )[-1]
-    )
+def y2023d9p2():
+    next_value = []
+    for line in puzzle_input:
+        sequences = []
+        number_sequence = [int(x) for x in line.split()][::-1]
 
-print_solution(solution=sum(next_value), y=year, d=day, part=2)
+        next_value.append(
+            next_in_series(
+                numbers=number_sequence,
+                step_diff_func=diff_line,
+                same_steps_func=same_diff,
+            )[-1]
+        )
+
+    return sum(next_value)
+
+
+print_solution(solution=y2023d9p1, y=year, d=day, part=1)
+
+print_solution(solution=y2023d9p2, y=year, d=day, part=2)

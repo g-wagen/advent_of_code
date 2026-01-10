@@ -1,13 +1,9 @@
-from advent_of_code.helper import choose_puzzle_input, print_solution
+from advent_of_code.helper import read_puzzle_input, print_solution
 
 year = 2023
 day = 10
 
-puzzle_input = choose_puzzle_input(
-    y=year,
-    d=day,
-    # sample_input_path=f"aoc_{year}_{day:02d}_input_sample.txt",
-)
+puzzle_input = read_puzzle_input(input_path=f"aoc_{year}_{day:02d}_input.txt")
 
 start = None
 
@@ -88,29 +84,31 @@ def next_connection(
 
     return next_coordinates
 
+def y2023d10p1():
+    for y, line in enumerate(puzzle_input):
+        start_index = line.find("S")
+        if start_index > -1:
+            start = [y, start_index]
+            break
 
-for y, line in enumerate(puzzle_input):
-    start_index = line.find("S")
-    if start_index > -1:
-        start = [y, start_index]
-        break
+    start_conns = start_connections(maze=puzzle_input, startpos=start)
+    visited_1.append(start_conns[0])
+    visited_2.append(start_conns[1])
 
-start_conns = start_connections(maze=puzzle_input, startpos=start)
-visited_1.append(start_conns[0])
-visited_2.append(start_conns[1])
-
-while visited_1[-1] != visited_2[-1]:
-    visited_1.append(
-        next_connection(
-            maze=puzzle_input, startpos=visited_1[-1], prevpos=visited_1
+    while visited_1[-1] != visited_2[-1]:
+        visited_1.append(
+            next_connection(
+                maze=puzzle_input, startpos=visited_1[-1], prevpos=visited_1
+            )
         )
-    )
-    visited_2.append(
-        next_connection(
-            maze=puzzle_input, startpos=visited_2[-1], prevpos=visited_2
+        visited_2.append(
+            next_connection(
+                maze=puzzle_input, startpos=visited_2[-1], prevpos=visited_2
+            )
         )
-    )
 
 
-solution = len(visited_1) if len(visited_1) == len(visited_2) else None
-print_solution(solution=solution, y=year, d=day, part=1)
+    return len(visited_1) if len(visited_1) == len(visited_2) else None
+
+
+print_solution(solution=y2023d10p1, y=year, d=day, part=1)

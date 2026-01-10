@@ -7,17 +7,19 @@ def assignment_contains_other_partially(first: set, second: set) -> bool:
     return True if set.intersection(first, second) else False
 
 
-redundant = 0
+def d4p2():
+    redundant = 0
 
-for item in puzzle_input:
-    assignments = get_assignment(item)
-    redundant += (
-        1
-        if assignment_contains_other_partially(
-            assignments.elf1, assignments.elf2
+    for item in puzzle_input:
+        assignments = get_assignment(item)
+        redundant += (
+            1
+            if assignment_contains_other_partially(
+                assignments.elf1, assignments.elf2
+            )
+            else 0
         )
-        else 0
-    )
+    return redundant
 
-if __name__ == "__main__":
-    print_solution(redundant, 2022, 4, 2)
+
+print_solution(d4p2, 2022, 4, 2)
